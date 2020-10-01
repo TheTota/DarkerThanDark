@@ -11,6 +11,8 @@ public class Wave
     public Vector3 Origin { get => origin; }
     public float Distance { get => distance; }
 
+    public const float MAXIMUM_DISTANCE = 1;
+
     public Wave(Vector3 origin, float radius)
     {
         this.origin = origin;
@@ -20,6 +22,8 @@ public class Wave
 
     public void UpdateDistance(float speed)
     {
-        distance = Mathf.Min(distance + (speed * Time.deltaTime) / radius, 1);
+        float updatedDistance = distance + speed * Time.deltaTime / radius;
+
+        distance = Mathf.Min(updatedDistance, MAXIMUM_DISTANCE);
     }
 }

@@ -22,7 +22,6 @@ public class WaveController : MonoBehaviour
 
         // Set the maximum size of the arrays used by the shader 
         material.SetVectorArray("_Origins", new Vector4[shaderArraySizeLimit]);
-        material.SetFloatArray("_Radius", new float[shaderArraySizeLimit]);
     }
 
     private void Update()
@@ -56,7 +55,7 @@ public class WaveController : MonoBehaviour
             wave.UpdateDistance(speed);
         }
 
-        waves = waves.Where(origin => origin.Distance < 1).ToList();
+        waves = waves.Where(origin => origin.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
     private void UpdateShader()
