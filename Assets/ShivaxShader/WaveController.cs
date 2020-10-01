@@ -55,7 +55,7 @@ public class WaveController : MonoBehaviour
             wave.UpdateDistance(speed);
         }
 
-        waves = waves.Where(origin => origin.Distance < Wave.MAXIMUM_DISTANCE).ToList();
+        waves = waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
     private void UpdateShader()
