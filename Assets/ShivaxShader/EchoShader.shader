@@ -41,8 +41,14 @@
                 return t*t*(3.0 - (2.0*t));
             }
 
+            fixed intensity(fixed4 color) {
+                return (color.x + color.y + color.z) / 3.0;
+            }
+
             fixed4 MultipleFragWave(float3 worldPos) {
                 fixed4 finalVal = fixed4(0,0,0,0);
+                float factor = 0;
+                fixed4 color = fixed4(0,0,0,0);
 
                 for(int i = 0; i < _WavesCount; i++) {
                     float dist = distance(worldPos.xyz, _Origins[i].xyz);
@@ -53,10 +59,13 @@
                     float lower = radiusWave - 0.5 * width;
 
                     float val = smoothstep(lower, radiusWave, dist) - smoothstep(radiusWave, upper, dist);
-                    val = val * (_Radius[i] - radiusWave) / _Radius[i];
-                    val = 2 * pow(val, 4);
+                    val *= (_Radius[i] - radiusWave) / _Radius[i];
+                    val *= 2 * pow(val, 4);
+
+                    factor = max(factor, val);
+                    color = _Colors[i] * step(intensity(_Colors[i]), intensity(color));
                     
-                    finalVal += max(0, val) * _Colors[i];
+                    finalVal += val * _Colors[i];
                 }
 
                 return finalVal;
