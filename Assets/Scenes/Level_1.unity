@@ -229,6 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveController: {fileID: 1596255430}
+  delayBetweenFootsteps: 0.7
+  offsetBetweenSteps: 0.4
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
