@@ -1,6 +1,4 @@
-﻿
-
-Shader "Unlit/EchoShader"
+﻿Shader "Unlit/EchoShader"
 {
     Properties
     {
@@ -19,11 +17,12 @@ Shader "Unlit/EchoShader"
 
             #include "UnityCG.cginc"
 
-            float4 _Color;
-            float _MaxRadius;
             int _WavesCount;
 
+            // Each float4 origin contains the distance pourcentage in the w coordinate.
             float4 _Origins[100];
+            float _Radius[100];
+            fixed4 _Colors[100];
 
             struct appdata
             {
@@ -42,20 +41,22 @@ Shader "Unlit/EchoShader"
                 return t*t*(3.0 - (2.0*t));
             }
 
-            float MultipleFragWave(float3 worldPos) {
-                float finalVal = 0;
+            fixed4 MultipleFragWave(float3 worldPos) {
+                fixed4 finalVal = fixed4(0,0,0,0);
 
                 for(int i = 0; i < _WavesCount; i++) {
                     float dist = distance(worldPos.xyz, _Origins[i].xyz);
-                    float radiusWave = _MaxRadius *  _Origins[i].w;
+                    float radiusWave = _Radius[i] *  _Origins[i].w;
                     float width = 0.2;    
                     
                     float upper = radiusWave + 0.5 * width;
                     float lower = radiusWave - 0.5 * width;
 
                     float val = smoothstep(lower, radiusWave, dist) - smoothstep(radiusWave, upper, dist);
-           
-                    finalVal += max(0, val * (_MaxRadius - radiusWave) / _MaxRadius);
+                    val = val * (_Radius[i] - radiusWave) / _Radius[i];
+                    val = 2 * pow(val, 4);
+                    
+                    finalVal += max(0, val) * _Colors[i];
                 }
 
                 return finalVal;
@@ -71,7 +72,7 @@ Shader "Unlit/EchoShader"
 
             fixed4 frag (v2f i) : SV_Target
             {           
-                return fixed4(1, 1, 1, 0) * MultipleFragWave(i.worldPos) * _Color;
+                return MultipleFragWave(i.worldPos);
             }
             ENDCG
         }
