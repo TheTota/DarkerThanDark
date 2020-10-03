@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WaveSpawner : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private WaveController waveController;
 
@@ -54,7 +54,7 @@ public class WaveSpawner : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(this.transform.position, 6, 1, Color.white); // TODO: add radius, speed, color params
+        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
         // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
@@ -73,11 +73,12 @@ public class WaveSpawner : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(hit.point, 6, 1, Color.white); // TODO: add radius, speed, color params
+            waveController.EmitWave(hit.point, 15, 4, Color.white); 
             // TODO: play footstep sound here
         }
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
     /// </summary>
@@ -88,7 +89,8 @@ public class WaveSpawner : MonoBehaviour
         {
             var worldPos = info.point;
 
-            waveController.EmitWave(worldPos, 1, 3, Color.white);
+            waveController.EmitWave(worldPos, 15, 6, Color.white);
         }
     }
+#endif
 }
