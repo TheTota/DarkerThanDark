@@ -78,6 +78,7 @@ public class Player : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
     /// </summary>
@@ -91,4 +92,5 @@ public class Player : MonoBehaviour
             waveController.EmitWave(worldPos, 15, 6, Color.white);
         }
     }
+#endif
 }
