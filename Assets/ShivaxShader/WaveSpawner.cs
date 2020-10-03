@@ -3,9 +3,16 @@
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private WaveController waveController;
+
+    // Shout
+    [Header("Shout")]
+    [SerializeField] private float delayBetweenShouts = 1f;
+    private float lastShoutTime;
+
+    // Footsteps variables
+    [Header("Footsteps")]
     [SerializeField] private float delayBetweenFootsteps = .7f;
     [SerializeField] private float offsetBetweenSteps = .3f;
-
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
@@ -14,15 +21,17 @@ public class WaveSpawner : MonoBehaviour
     {
         lastPos = this.transform.position;
         lastStepTime = Time.time;
+        lastShoutTime = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Player "emits" a wave
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
         {
             SpawnWaveOnPlayerPos();
+            lastShoutTime = Time.time;
         }
     }
 
