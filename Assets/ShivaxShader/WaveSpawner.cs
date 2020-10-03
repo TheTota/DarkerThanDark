@@ -54,7 +54,7 @@ public class WaveSpawner : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.CreateWave(this.transform.position); // TODO: add radius, speed, color params
+        waveController.CreateWave(this.transform.position, 6, 1, Color.white); // TODO: add radius, speed, color params
         // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
@@ -73,7 +73,7 @@ public class WaveSpawner : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.CreateWave(hit.point); // TODO: add radius, speed, color params
+            waveController.CreateWave(hit.point, 6, 1, Color.white); // TODO: add radius, speed, color params
             // TODO: play footstep sound here
         }
     }
@@ -88,7 +88,7 @@ public class WaveSpawner : MonoBehaviour
         {
             var worldPos = info.point;
 
-            waveController.CreateWave(worldPos);
+            waveController.CreateWave(worldPos, 1, 3, Color.white);
         }
     }
 }
