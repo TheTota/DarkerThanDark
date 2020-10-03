@@ -528,7 +528,7 @@ PrefabInstance:
     - target: {fileID: 3858553823689565436, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: wavesRadius
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4129026336976066976, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
