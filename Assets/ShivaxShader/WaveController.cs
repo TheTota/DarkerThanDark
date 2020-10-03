@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
     [SerializeField] private Material material;
-    [SerializeField] private float speed = 1;
-    [SerializeField] private float radius = 1;
 
     [Range(1, shaderArraySizeLimit)]
     [SerializeField] private int maximumWaves = 1;
@@ -22,29 +22,38 @@ public class WaveController : MonoBehaviour
 
         // Set the maximum size of the arrays used by the shader 
         material.SetVectorArray("_Origins", new Vector4[shaderArraySizeLimit]);
+        material.SetFloatArray("_Radius", new float[shaderArraySizeLimit]);
+        material.SetVectorArray("_Colors", new Vector4[shaderArraySizeLimit]);
     }
 
     private void Update()
     {
-        material.SetFloat("_MaxRadius", radius);
         material.SetInt("_WavesCount", waves.Count);
-      
+
         HandleWaves();
 
         UpdateShader();
     }
 
-    public void CreateWave(Vector3 worldPos)
+
+    /// <summary>
+    /// Create and emit a wave which is updates over time.
+    /// </summary>
+    /// <param name="worldPos"></param>
+    /// <param name="radius"></param>
+    /// <param name="speed"></param>
+    /// <param name="color"></param>
+    public void CreateWave(Vector3 worldPos, float radius, float speed, Color color)
     {
         if (waves.Count >= maximumWaves) return;
 
-        var wave = new Wave(worldPos, radius);
+        var wave = new Wave(worldPos, radius, speed, color);
 
         waves.Insert(0, wave);
     }
 
     /// <summary>
-    /// Updates waves progress and remove olders ones
+    /// Update waves progress and remove olders ones.
     /// </summary>
     private void HandleWaves()
     {
@@ -52,38 +61,72 @@ public class WaveController : MonoBehaviour
         for (int i = 0; i < waves.Count; i++)
         {
             var wave = waves[i];
-            wave.UpdateDistance(speed);
+            wave.UpdateDistance(Time.deltaTime);
         }
 
         waves = waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
+
+    /// <summary>
+    /// Update shader with array of values extracted from the wave list.
+    /// </summary>
     private void UpdateShader()
     {
         if (waves.Count > 0)
         {
-            var originsArray = ExtractOrigins(waves);
+            Vector4[] shaderOrigins = GetShaderOrigins(waves);
+            float[] radius = ExtractArray(waves, wave => wave.Radius);
+            Vector4[] colors = ExtractArray(waves, wave => (Vector4)wave.Color);
 
-            material.SetVectorArray("_Origins", originsArray);
+            material.SetVectorArray("_Origins", shaderOrigins);
+            material.SetFloatArray("_Radius", radius);
+            material.SetVectorArray("_Colors", colors);
         }
     }
 
     /// <summary>
-    /// Extract waves origins from a list of waves.
+    /// Extract Vector3[] of origins and transform into Vector4[] with wave distance for w coordinate.
     /// </summary>
     /// <param name="waves"></param>
     /// <returns></returns>
-    private static Vector4[] ExtractOrigins(List<Wave> waves)
+    private Vector4[] GetShaderOrigins(List<Wave> waves)
     {
-        var origins = new List<Vector4>();
+        var shaderOrigins = new Vector4[waves.Count];
+
+        Vector3[] origins = ExtractArray(waves, wave => wave.Origin);
+        float[] distances = ExtractArray(waves, wave => wave.Distance);
+
+        for (int i = 0; i < origins.Count(); i++)
+        {
+            var origin = origins[i];
+            var distance = distances[i];
+
+            shaderOrigins[i] = new Vector4(origin.x, origin.y, origin.z, distance);
+        }
+
+        return shaderOrigins.ToArray();
+    }
+
+    /// <summary>
+    /// Generic method which extracts an array of values by specifying a selector which is called on each elements of the list.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="waves"></param>
+    /// <param name="selector">Evaluated on each item of the waves list</param>
+    /// <returns></returns>
+    private static T[] ExtractArray<T>(List<Wave> waves, Func<Wave, T> selector)
+    {
+        var values = new List<T>();
 
         foreach (var wave in waves)
         {
-            var origin = wave.Origin;
+            var extractedValue = selector(wave);
 
-            origins.Add(new Vector4(origin.x, origin.y, origin.z, wave.Distance));
+            values.Add(extractedValue);
         }
 
-        return origins.ToArray();
+        return values.ToArray();
     }
+
 }
