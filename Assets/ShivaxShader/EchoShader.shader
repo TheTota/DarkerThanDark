@@ -47,7 +47,6 @@
 
             fixed4 MultipleFragWave(float3 worldPos) {
                 fixed4 finalVal = fixed4(0,0,0,0);
-                float factor = 0;
                 fixed4 color = fixed4(0,0,0,0);
 
                 for(int i = 0; i < _WavesCount; i++) {
@@ -62,7 +61,6 @@
                     val *= (_Radius[i] - radiusWave) / _Radius[i];
                     val *= 2 * pow(val, 4);
 
-                    factor = max(factor, val);
                     color = _Colors[i] * step(intensity(_Colors[i]), intensity(color));
                     
                     finalVal += val * _Colors[i];
