@@ -19,6 +19,7 @@ public class WaveSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Player "emits" a wave
         if (Input.GetMouseButtonDown(0))
         {
             SpawnWaveOnPlayerPos();
@@ -27,6 +28,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Trigger footsteps if moving and delay between footsteps is ok
         if (Vector3.SqrMagnitude(this.transform.position - lastPos) > .001f && Time.time - lastStepTime >= delayBetweenFootsteps)
         {
             SpawnFootstepsWaves();
@@ -44,6 +46,7 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnWaveOnPlayerPos()
     {
         waveController.CreateWave(this.transform.position); // TODO: add radius, speed, color params
+        // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
     /// <summary>
@@ -53,19 +56,21 @@ public class WaveSpawner : MonoBehaviour
     {
         // Prepare footstep raycast
         Vector3 down = this.transform.TransformDirection(Vector3.down);
-        float stepMultiplicator = this.steppingRight ? 1f : -1f;
-        Vector3 startingPos = new Vector3(this.transform.position.x + (offsetBetweenSteps * stepMultiplicator), this.transform.position.y, this.transform.position.z);
+        float stepMultiplicator = this.steppingRight ? offsetBetweenSteps : -offsetBetweenSteps;
+        Vector3 footstepOffset = (this.transform.right * stepMultiplicator);
+        Vector3 startingPos = transform.position + footstepOffset;
 
         // Throw raycast and create wave on hit point
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
             waveController.CreateWave(hit.point); // TODO: add radius, speed, color params
+            // TODO: play footstep sound here
         }
     }
 
     /// <summary>
-    /// Spawns a wave starting on the aimed position (aim with crosshair).
+    /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
     /// </summary>
     private void SpawnWaveOnCrosshairPos()
     {
@@ -77,7 +82,4 @@ public class WaveSpawner : MonoBehaviour
             waveController.CreateWave(worldPos);
         }
     }
-
-    // TODO: spawn waves for footsteps
-
 }
