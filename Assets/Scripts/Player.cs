@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WaveSpawner : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private WaveController waveController;
 
@@ -54,7 +54,7 @@ public class WaveSpawner : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(this.transform.position, 35, 4, Color.white);
+        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
         // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
