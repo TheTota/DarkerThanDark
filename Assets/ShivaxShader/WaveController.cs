@@ -43,7 +43,7 @@ public class WaveController : MonoBehaviour
     /// <param name="radius"></param>
     /// <param name="speed"></param>
     /// <param name="color"></param>
-    public void CreateWave(Vector3 worldPos, float radius, float speed, Color color)
+    public void EmitWave(Vector3 worldPos, float radius, float speed, Color color)
     {
         if (waves.Count >= maximumWaves) return;
 
