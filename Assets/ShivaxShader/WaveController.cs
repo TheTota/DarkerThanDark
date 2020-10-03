@@ -69,7 +69,7 @@ public class WaveController : MonoBehaviour
     }
 
     /// <summary>
-    /// Extract waves origins from a list of waves
+    /// Extract waves origins from a list of waves.
     /// </summary>
     /// <param name="waves"></param>
     /// <returns></returns>
