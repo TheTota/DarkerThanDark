@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [Header("Footsteps")]
     [SerializeField] private float delayBetweenFootsteps = .7f;
     [SerializeField] private float offsetBetweenSteps = .3f;
+    private const float FOOTSTEP_MIN_MOVEMENT_MAGNITUDE = .0001f;
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // Trigger footsteps if moving and delay between footsteps is ok
-        if (Vector3.SqrMagnitude(this.transform.position - lastPos) > .001f && Time.time - lastStepTime >= delayBetweenFootsteps)
+        if (Vector3.SqrMagnitude(this.transform.position - lastPos) > FOOTSTEP_MIN_MOVEMENT_MAGNITUDE && Time.time - lastStepTime >= delayBetweenFootsteps)
         {
             SpawnFootstepsWaves();
 
