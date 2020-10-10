@@ -89,7 +89,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 95
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -137,9 +137,9 @@ GameObject:
   - component: {fileID: 136239539305442568}
   - component: {fileID: 114051214696948948}
   m_Layer: 0
-  m_Name: FirstPerson-AIO
+  m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -150,14 +150,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743903104223250}
-  m_LocalRotation: {x: -0, y: -1, z: 0, w: -0.0000001872535}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4204582120663750}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &82712217391461128
 AudioSource:
   m_ObjectHideFlags: 0
@@ -296,26 +296,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1a5ad4f9ffb154ca7813fdad11017a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerPauseState: 0
   enableCameraMovement: 1
   mouseInputInversion: 0
-  verticalRotationRange: 170
-  mouseSensitivity: 10
+  cameraInputMethod: 0
+  verticalRotationRange: 180
+  mouseSensitivity: 3
   fOVToMouseSensitivity: 1
   cameraSmoothing: 5
   lockAndHideCursor: 1
   playerCamera: {fileID: 20724644957976244}
-  enableCameraShake: 1
-  autoCrosshair: 1
+  enableCameraShake: 0
+  autoCrosshair: 0
   drawStaminaMeter: 1
   Crosshair: {fileID: 21300000, guid: 7fa7752f7f2a3fc4fbc2bcaea5671e2d, type: 3}
   targetAngles: {x: 0, y: 0, z: 0}
   playerCanMove: 1
   walkByDefault: 1
   walkSpeed: 4
-  sprintKey: 304
+  sprintKey: 0
   sprintSpeed: 8
   jumpPower: 5
-  canJump: 1
+  canJump: 0
   canHoldJump: 0
   useStamina: 1
   staminaDepletionSpeed: 2
@@ -344,7 +346,7 @@ MonoBehaviour:
     fovRef: 0
   isCrouching: 0
   fps_Rigidbody: {fileID: 0}
-  useHeadbob: 1
+  useHeadbob: 0
   head: {fileID: 4204582120663750}
   snapHeadjointToCapsul: 1
   headbobFrequency: 1.5
@@ -352,7 +354,7 @@ MonoBehaviour:
   headbobHeight: 1
   headbobSideMovement: 0.5
   jumpLandIntensity: 3
-  enableAudioSFX: 1
+  enableAudioSFX: 0
   Volume: 5
   jumpSound: {fileID: 0}
   landSound: {fileID: 0}
