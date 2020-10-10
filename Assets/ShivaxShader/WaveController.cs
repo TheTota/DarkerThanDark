@@ -33,6 +33,8 @@ public class WaveController : MonoBehaviour
         HandleWaves();
 
         UpdateShader();
+
+        waves = FilterWaves();
     }
 
 
@@ -63,8 +65,6 @@ public class WaveController : MonoBehaviour
             var wave = waves[i];
             wave.UpdateDistance(Time.deltaTime);
         }
-
-        waves = waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
 
@@ -83,6 +83,11 @@ public class WaveController : MonoBehaviour
             material.SetFloatArray("_Radius", radius);
             material.SetVectorArray("_Colors", colors);
         }
+    }
+
+    private List<Wave> FilterWaves()
+    {
+        return waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
     /// <summary>
