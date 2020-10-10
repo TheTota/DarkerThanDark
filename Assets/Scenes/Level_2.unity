@@ -166,7 +166,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 41eca8178e9744a41ae0e75b03e26a6a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41eca8178e9744a41ae0e75b03e26a6a,
         type: 3}
@@ -385,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448068258976056, guid: 2e62f5703e5f8d2488a5e1bc8433be41, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4448068258976056, guid: 2e62f5703e5f8d2488a5e1bc8433be41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -607,7 +607,7 @@ PrefabInstance:
     - target: {fileID: 3604831606306538266, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3604831606306538266, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
@@ -625,6 +625,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3858553823689565436, guid: 1a983c6fa15619b4e995239edc0abf0e,
+        type: 3}
+      propertyPath: waveController
+      value: 
+      objectReference: {fileID: 1596255430}
+    - target: {fileID: 4059144418332755676, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: waveController
       value: 

@@ -5,32 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] private WaveController waveController;
-
-    [Header("Rotation")]
     [SerializeField] private float rotationSpeed = 2f;
-
-    [Header("Waves")]
-    [SerializeField] private float delayBetweenWaves = 2f;
-    [SerializeField] private float wavesRadius = 10f;
-    private float lastWaveTime;
-
-    private void Start()
-    {
-        lastWaveTime = Time.time;
-    }
 
     private void Update()
     {
         // Rotate on self
         this.transform.Rotate(rotationSpeed * new Vector3(.2f, .2f, .2f) * Time.deltaTime);
-
-        // Emit waves
-        if (Time.time - lastWaveTime >= delayBetweenWaves)
-        {
-            waveController.EmitWave(this.transform.position, wavesRadius, 4, Color.green);
-            lastWaveTime = Time.time;
-        }
     }
 
     /// <summary>
