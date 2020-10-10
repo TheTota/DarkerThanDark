@@ -6,7 +6,8 @@ public class DronevisionDetection : MonoBehaviour
 {
     [SerializeField] private Drone drone;
     [Header("Vision")]
-    [SerializeField] private float visionRange = 50f;
+    [SerializeField] private float visionRange = 8f;
+    [SerializeField] private float visionAngleOnEachSide = 30f;
     private Transform playerTransform;
 
     // Start is called before the first frame update
@@ -19,15 +20,17 @@ public class DronevisionDetection : MonoBehaviour
     void Update()
     {
         this.transform.LookAt(playerTransform);
+        float distanceFromPlayer = Vector3.Distance(this.transform.position, this.playerTransform.position);
 
         // Check if player in line of sight and at the right distance
         RaycastHit hit;
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, visionRange))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, visionRange) && distanceFromPlayer <= visionRange)
         {
-            if (hit.transform.CompareTag("Player"))
+            float angle = Vector3.Angle(this.drone.transform.forward, this.transform.forward);
+            if (hit.transform.CompareTag("Player") && (angle <= visionAngleOnEachSide && angle >= -visionAngleOnEachSide))
             {
                 Debug.DrawLine(this.transform.position, hit.point, Color.green);
-                drone.KillThePlayer();
+                this.drone.KillThePlayer();
             }
             else
             {
