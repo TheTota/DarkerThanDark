@@ -355,6 +355,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &959070037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959070038}
+  - component: {fileID: 959070039}
+  - component: {fileID: 959070040}
+  m_Layer: 0
+  m_Name: ProxZoneTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &959070038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959070037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 543450651708562942}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &959070039
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959070037}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.75
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &959070040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959070037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c421c09f531204bac4abe8d27dc2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drone: {fileID: 919132147791120197}
 --- !u!1 &1407167066 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7030219592342931679, guid: 41eca8178e9744a41ae0e75b03e26a6a,
@@ -599,6 +657,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3908009901985544626}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &919132147791120196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
+    type: 3}
+  m_PrefabInstance: {fileID: 3908009901985544626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &919132147791120197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147791120196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a93d854e8da2a5419eb0f05c6871ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3858553822623459206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -745,16 +821,6 @@ PrefabInstance:
       propertyPath: waveController
       value: 
       objectReference: {fileID: 1596255430}
-    - target: {fileID: 3908009900888566126, guid: dc38e350d995ed54a85944d87ea55fdf,
-        type: 3}
-      propertyPath: wavesSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3908009900888566126, guid: dc38e350d995ed54a85944d87ea55fdf,
-        type: 3}
-      propertyPath: secondsBetweenWaves
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}
       propertyPath: m_Name

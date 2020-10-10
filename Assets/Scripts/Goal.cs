@@ -26,6 +26,10 @@ public class Goal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Load next level if possible. 
+    /// If we've completed the last level, load the GG scene.
+    /// </summary>
     private static void LoadNextLevel()
     {
         int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
