@@ -26,7 +26,7 @@ public class DronevisionDetection : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, visionRange) && distanceFromPlayer <= visionRange)
         {
-            float angle = Vector3.Angle(this.drone.transform.forward, this.transform.forward);
+            float angle = Vector3.Angle(this.drone.body.transform.forward, this.transform.forward);
             if (hit.transform.CompareTag("Player") && (angle <= visionAngleOnEachSide && angle >= -visionAngleOnEachSide))
             {
                 Debug.DrawLine(this.transform.position, hit.point, Color.green);
