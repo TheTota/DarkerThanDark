@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -46,11 +47,23 @@ public class WaveController : MonoBehaviour
     /// <param name="radius"></param>
     /// <param name="speed"></param>
     /// <param name="color"></param>
+    [Obsolete("This method is obselete. Use EmitWave(Wave) instead")]
     public void EmitWave(Vector3 worldPos, float radius, float speed, Color color)
     {
         if (waves.Count >= maximumWaves) return;
 
         var wave = new Wave(worldPos, radius, speed, color);
+
+        waves.Insert(0, wave);
+    }
+
+    /// <summary>
+    /// Emit a wave which is updated over time.
+    /// </summary>
+    /// <param name="wave"></param>
+    public void EmitWave(Wave wave)
+    {
+        if (waves.Count >= maximumWaves) return;
 
         waves.Insert(0, wave);
     }
