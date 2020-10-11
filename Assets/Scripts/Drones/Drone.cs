@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum DroneType
 {
@@ -24,12 +25,23 @@ public class Drone : MonoBehaviour
 
     [Header("Patroller params")]
     [SerializeField] private Transform patrollingPointsParent;
-    [SerializeField] private float patrollingSpeed = 5f;
+    [SerializeField] private float patrollingSpeed = 1f;
+    private NavMeshAgent navAgent;
+    private int patrollingPointsIndex;
 
     private void Awake()
     {
         lastPointChangeTime = Time.time;
         sentryPointsIndex = -1;
+        patrollingPointsIndex = 1;
+
+        // get the nav mesh agent for patroller drones
+        if (type == DroneType.Patroller)
+        {
+            navAgent = GetComponent<NavMeshAgent>();
+            navAgent.speed = patrollingSpeed;
+            patrollingPointsParent.parent = null; // TODO: improve/clean this
+        }
     }
 
     // Update is called once per frame
@@ -81,7 +93,21 @@ public class Drone : MonoBehaviour
     {
         if (this.patrollingPointsParent.childCount >= 2)
         {
+            // check if destination reached
+            if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance && (!navAgent.hasPath || navAgent.velocity.sqrMagnitude == 0f))
+            {
+                // set patroller index for next position
+                if (patrollingPointsIndex + 1 < patrollingPointsParent.childCount)
+                {
+                    patrollingPointsIndex++;
+                }
+                else
+                {
+                    patrollingPointsIndex = 0;
+                }
 
+            }
+            navAgent.SetDestination(this.patrollingPointsParent.GetChild(this.patrollingPointsIndex).position);
         }
         else
         {

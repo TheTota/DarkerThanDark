@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 3908009900888566126}
   - component: {fileID: 919132147791120197}
   m_Layer: 0
-  m_Name: dont_use_Drone
+  m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291417346a792df4e9074b9848d8ea45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveController: {fileID: 0}
   secondsBetweenWaves: 3
   wavesRadius: 10
   wavesSpeed: 4
@@ -520,6 +519,8 @@ MonoBehaviour:
   sentryPointsParent: {fileID: 0}
   sentrySecondsPerPoint: 5
   sentryRotationSpeed: 200
+  patrollingPointsParent: {fileID: 0}
+  patrollingSpeed: 1
 --- !u!1 &4619364587785200276
 GameObject:
   m_ObjectHideFlags: 0
