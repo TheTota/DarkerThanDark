@@ -43,7 +43,7 @@ GameObject:
   m_Layer: 0
   m_Name: Point (1)
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7235377779006328004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0, z: 13.84}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4060850900042805433}
@@ -81,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 3582247580589204556, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 3582247580589204556, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}
@@ -133,6 +133,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrollerDroneVariant
       objectReference: {fileID: 0}
+    - target: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000,
+        type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc38e350d995ed54a85944d87ea55fdf, type: 3}
 --- !u!4 &7422222751330318151 stripped
