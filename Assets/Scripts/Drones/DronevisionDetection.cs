@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronevisionDetection : MonoBehaviour
+public class DroneVisionDetection : MonoBehaviour
 {
     [SerializeField] private Drone drone;
     [Header("Vision")]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PeriodicWaveEmitter : MonoBehaviour
 {
-    [SerializeField] private WaveController waveController;
+    private WaveController waveController;
 
     [Header("Waves")]
     [SerializeField] private float secondsBetweenWaves = 2f;
@@ -15,6 +15,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
 
     private void Start()
     {
+        waveController = WaveController.Instance;
         lastWaveTime = Time.time;
     }
 

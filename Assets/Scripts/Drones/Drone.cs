@@ -22,6 +22,16 @@ public class Drone : MonoBehaviour
     private float lastPointChangeTime;
     private Transform targetPoint;
 
+    [Header("Patroller params")]
+    [SerializeField] private Transform patrollingPointsParent;
+    [SerializeField] private float patrollingSpeed = 5f;
+
+    private void Awake()
+    {
+        lastPointChangeTime = Time.time;
+        sentryPointsIndex = -1;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -41,7 +51,7 @@ public class Drone : MonoBehaviour
         if (this.sentryPointsParent.childCount > 1)
         {
             // change position we're looking at every X seconds, if we have more than 1 child to look at
-            if (Time.time - lastPointChangeTime >= sentrySecondsPerPoint)
+            if (sentryPointsIndex < 0 || Time.time - lastPointChangeTime >= sentrySecondsPerPoint)
             {
                 // set sentry point index
                 if (sentryPointsIndex + 1 < sentryPointsParent.childCount)
@@ -69,7 +79,7 @@ public class Drone : MonoBehaviour
 
     private void DoPatrollerBehaviour()
     {
-        // TODO: patroller drone behaviour
+
     }
 
     public void KillThePlayer()
