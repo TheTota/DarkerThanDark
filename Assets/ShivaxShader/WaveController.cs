@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
+    public static WaveController Instance { get; set; }
+
     [SerializeField] private Material material;
 
     [Range(1, shaderArraySizeLimit)]
@@ -15,6 +17,11 @@ public class WaveController : MonoBehaviour
 
     // Value fixed and synchronized with the maximum size of an array in the shader
     private const int shaderArraySizeLimit = 100;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
