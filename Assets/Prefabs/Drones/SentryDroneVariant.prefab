@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: Point (1)
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -148,6 +148,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: SentryDroneVariant
       objectReference: {fileID: 0}
+    - target: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000,
+        type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc38e350d995ed54a85944d87ea55fdf, type: 3}
 --- !u!4 &5723779811785901641 stripped
