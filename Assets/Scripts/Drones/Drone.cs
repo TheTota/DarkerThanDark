@@ -79,7 +79,14 @@ public class Drone : MonoBehaviour
 
     private void DoPatrollerBehaviour()
     {
+        if (this.patrollingPointsParent.childCount >= 2)
+        {
 
+        }
+        else
+        {
+            Debug.LogError("Less than 2 patrolling points found on " + this.gameObject.name + " - use a sentry drone instead.");
+        }
     }
 
     public void KillThePlayer()
