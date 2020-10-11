@@ -7,8 +7,26 @@ public class WaveController : MonoBehaviour
 {
     [SerializeField] private Material material;
 
+
+    [Header("Waves Settings")]
+
+    [Range(1, 10)]
+    [SerializeField] private int waveColorIntensity = 1;
+
+    [Tooltip("This value represents the inner radius width")]
+    [Min(0.01f)]
+    [SerializeField] private float waveRadiusWidth = 0.01f;
+
+    [Tooltip("This value represents the distance between the circle and its origin in percente")]
+    [Range(0f, 1f)]
+    [SerializeField] private float waveTrailWidth = 0f;
+
+    [Tooltip("Maximum number of waves which the controller can handle")]
     [Range(1, shaderArraySizeLimit)]
     [SerializeField] private int maximumWaves = 1;
+    
+
+    [Header("Waves Debug")]
 
     [SerializeField] private List<Wave> waves;
 
@@ -31,6 +49,9 @@ public class WaveController : MonoBehaviour
     private void Update()
     {
         material.SetInt("_WavesCount", waves.Count);
+        material.SetFloat("_WaveColorIntensity", waveColorIntensity);
+        material.SetFloat("_WaveRadiusWidth", waveRadiusWidth);
+        material.SetFloat("_WaveTrailWidth", waveTrailWidth);
 
         HandleWaves();
 

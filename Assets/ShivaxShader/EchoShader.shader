@@ -24,6 +24,11 @@
             float _Radius[100];
             fixed4 _Colors[100];
 
+            // Configurable parameters
+            float _WaveColorIntensity;
+            float _WaveRadiusWidth;
+            float _WaveTrailWidth;
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -51,7 +56,7 @@
                 for(int i = 0; i < _WavesCount; i++) {
                     float dist = distance(worldPos.xyz, _Origins[i].xyz);
                     float circleWave = _Radius[i] *  _Origins[i].w; 
-                    float circleWidth = 0.08;    
+                    float circleWidth = _WaveRadiusWidth;    
                     
                     float upper = circleWave + 0.5 * circleWidth;
                     float lower = circleWave - 0.5 * circleWidth;
@@ -59,11 +64,11 @@
                     float val = smoothstep(lower, circleWave, dist) - smoothstep(circleWave, upper, dist);
 
                     // Compute wave trail and width
-                    float waveTrail = ComputeWaveTrail(dist, circleWave, 0.81);
+                    float waveTrail = ComputeWaveTrail(dist, circleWave, 1 - _WaveTrailWidth);
 
                     float fadeFactor = (_Radius[i] - circleWave) / _Radius[i];
                     
-                    finalVal = max(finalVal, _Colors[i] * (val + waveTrail) * fadeFactor);
+                    finalVal = 1 * max(finalVal, _Colors[i] * (_WaveColorIntensity * val + waveTrail) * fadeFactor);
                 }
 
                 return finalVal;
