@@ -19,6 +19,21 @@ public class Wave
 
     public const float MAXIMUM_DISTANCE = 1;
 
+    /// <summary>
+    /// Facade method to create a wave with a duration in seconds
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <param name="lifeTime"></param>
+    /// <param name="speed"></param>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public static Wave CreateFromDuration(Vector3 origin, float duration, float speed, Color color)
+    {
+        var radius = duration * speed;
+
+        return new Wave(origin, radius, speed, color);
+    }
+
     public Wave(Vector3 origin, float radius) : this(origin, radius, 1, Color.white)
     {
         this.origin = origin;
