@@ -15,10 +15,12 @@ public class Drone : MonoBehaviour
     [SerializeField] private DroneType type;
 
     [Header("Sentry params")]
-    [SerializeField] private float sentrySecondsPerPoint = 5f;
     [SerializeField] private Transform sentryPointsParent;
+    [SerializeField] private float sentrySecondsPerPoint = 5f;
+    [SerializeField] private float sentryRotationSpeed = 200f;
     private int sentryPointsIndex;
     private float lastPointChangeTime;
+    private Transform targetPoint;
 
     // Update is called once per frame
     void Update()
@@ -35,23 +37,33 @@ public class Drone : MonoBehaviour
 
     private void DoSentryBehaviour()
     {
-        // change position we're looking at every X seconds
-        if (Time.time - lastPointChangeTime >= sentrySecondsPerPoint)
+        // no need to rotate on self if there's only 1 position to guard!
+        if (this.sentryPointsParent.childCount > 1)
         {
-            // set sentry point index
-            if (sentryPointsIndex + 1 < sentryPointsParent.childCount)
+            // change position we're looking at every X seconds, if we have more than 1 child to look at
+            if (Time.time - lastPointChangeTime >= sentrySecondsPerPoint)
             {
-                sentryPointsIndex++;
-            }
-            else
-            {
-                sentryPointsIndex = 0;
+                // set sentry point index
+                if (sentryPointsIndex + 1 < sentryPointsParent.childCount)
+                {
+                    sentryPointsIndex++;
+                }
+                else
+                {
+                    sentryPointsIndex = 0;
+                }
+
+                // look at new position
+                this.targetPoint = sentryPointsParent.GetChild(sentryPointsIndex);
+
+                this.lastPointChangeTime = Time.time;
             }
 
-            // look at new position
-            this.body.transform.LookAt(sentryPointsParent.GetChild(sentryPointsIndex));
-
-            this.lastPointChangeTime = Time.time;
+            // if we have a target point, rotate towards it
+            if (this.targetPoint)
+            {
+                this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), sentryRotationSpeed * Time.deltaTime);
+            }
         }
     }
 
