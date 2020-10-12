@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using FMODUnity;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
+
 
     private void Start()
     {
@@ -56,7 +58,8 @@ public class Player : MonoBehaviour
     private void SpawnWaveOnPlayerPos()
     {
         waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
-        // TODO: play "scream" sound here (if that's what we wanna do)
+        // play "scream" sound 
+        RuntimeManager.PlayOneShot("event:/Scream");
     }
 
     /// <summary>
@@ -74,8 +77,9 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(hit.point, 15, 4, Color.white); 
-            // TODO: play footstep sound here
+            waveController.EmitWave(hit.point, 15, 4, Color.white);
+            // play footstep sound 
+           RuntimeManager.PlayOneShot("event:/Steps");
         }
     }
 
