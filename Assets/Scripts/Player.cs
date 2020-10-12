@@ -2,7 +2,7 @@
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private WaveController waveController;
+    private WaveController waveController;
 
     // Shout
     [Header("Shout")]
@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        waveController = WaveController.Instance;
+
         lastPos = this.transform.position;
         lastStepTime = Time.time;
         lastShoutTime = Time.time;

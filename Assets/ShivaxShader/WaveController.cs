@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
+    public static WaveController Instance { get; set; }
+
     [SerializeField] private Material material;
 
 
@@ -35,6 +37,11 @@ public class WaveController : MonoBehaviour
 
     private static Vector4[] EMPTY_VECTOR4_ARRAY = new Vector4[shaderArraySizeLimit];
     private static float[] EMPTY_FLOAT_ARRAY = new float[shaderArraySizeLimit];
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

@@ -452,7 +452,7 @@ PrefabInstance:
     - target: {fileID: 4070213196848133371, guid: dce3aa47b824ba442a43a41caa611f17,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4070213196848133371, guid: dce3aa47b824ba442a43a41caa611f17,
         type: 3}
@@ -528,7 +528,7 @@ PrefabInstance:
     - target: {fileID: 3604831606306538266, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3604831606306538266, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
@@ -555,6 +555,11 @@ PrefabInstance:
       propertyPath: wavesRadius
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4059144418332755676, guid: 1a983c6fa15619b4e995239edc0abf0e,
+        type: 3}
+      propertyPath: waveController
+      value: 
+      objectReference: {fileID: 1596255430}
     - target: {fileID: 4129026336976066976, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: m_Name
