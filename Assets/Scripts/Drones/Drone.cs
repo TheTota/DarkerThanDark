@@ -64,7 +64,7 @@ public class Drone : MonoBehaviour
         // if we have a target point, rotate towards it
         if (this.targetPoint && (type == DroneType.Sentry || !canMove))
         {
-            this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), sentryRotationSpeed * Time.deltaTime);
+            this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), this.sentryRotationSpeed * Time.deltaTime);
         }
     }
 

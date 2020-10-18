@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     private WaveController waveController;
     private FirstPersonAIO fpsController;
+    private Camera mainCam;
 
     // Shout
     [Header("Shout")]
@@ -19,12 +22,17 @@ public class Player : MonoBehaviour
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
-
+    
+    // Game Over
+    [Header("Game Over")]
+    [SerializeField] private float cameraRotationSpeed = 100f;
     public bool IsGameOver { get; set; }
-
+    private Transform killerDrone;
+    
     private void Awake()
     {
         this.fpsController = GetComponent<FirstPersonAIO>();
+        this.mainCam = Camera.main;
     }
 
     private void Start()
@@ -44,6 +52,10 @@ public class Player : MonoBehaviour
         {
             SpawnWaveOnPlayerPos();
             lastShoutTime = Time.time;
+        }
+        else if (IsGameOver)
+        {
+            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDrone.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
     }
 
@@ -90,29 +102,28 @@ public class Player : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Turns player towards drone that spotted him, then restarts the level after a delay.
+    /// </summary>
+    /// <param name="killerDrone"></param>
     public void GameOver(Transform killerDrone)
     {
         IsGameOver = true;
 
         // block cam and look at drone who killed player
         this.fpsController.enableCameraMovement = false;
-        this.fpsController.playerCanMove = false; 
-        Camera.main.transform.LookAt(killerDrone);
+        this.fpsController.playerCanMove = false;
+        this.killerDrone = killerDrone;
+
+        // TODO: add ui display "GameOver"
+
+        // Restart level after delay
+        StartCoroutine(RestartLevelAfterDelay(4f));
     }
 
-#if UNITY_EDITOR
-    /// <summary>
-    /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
-    /// </summary>
-    private void SpawnWaveOnCrosshairPos()
+    private IEnumerator RestartLevelAfterDelay(float s)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit info))
-        {
-            var worldPos = info.point;
-
-            waveController.EmitWave(worldPos, 15, 6, Color.white);
-        }
+        yield return new WaitForSeconds(s);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-#endif
 }
