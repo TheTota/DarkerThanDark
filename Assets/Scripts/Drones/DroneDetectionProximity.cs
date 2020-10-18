@@ -10,7 +10,7 @@ public class DroneDetectionProximity : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            drone.KillThePlayer();
+            drone.KillThePlayer(other.transform.GetComponent<Player>());
         }
     }
 }

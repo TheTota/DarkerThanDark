@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     private WaveController waveController;
+    private FirstPersonAIO fpsController;
+    private Camera mainCam;
 
     // Shout
     [Header("Shout")]
@@ -17,6 +22,18 @@ public class Player : MonoBehaviour
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
+    
+    // Game Over
+    [Header("Game Over")]
+    [SerializeField] private float cameraRotationSpeed = 100f;
+    public bool IsGameOver { get; set; }
+    private Transform killerDrone;
+    
+    private void Awake()
+    {
+        this.fpsController = GetComponent<FirstPersonAIO>();
+        this.mainCam = Camera.main;
+    }
 
     private void Start()
     {
@@ -31,10 +48,14 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Player "emits" a wave
-        if (Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
+        if (!IsGameOver && Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
         {
             SpawnWaveOnPlayerPos();
             lastShoutTime = Time.time;
+        }
+        else if (IsGameOver)
+        {
+            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDrone.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
     }
 
@@ -57,7 +78,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
+        waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
         // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
@@ -76,24 +97,33 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(hit.point, 15, 4, Color.white); 
+            waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white)); 
             // TODO: play footstep sound here
         }
     }
-
-#if UNITY_EDITOR
+    
     /// <summary>
-    /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
+    /// Turns player towards drone that spotted him, then restarts the level after a delay.
     /// </summary>
-    private void SpawnWaveOnCrosshairPos()
+    /// <param name="killerDrone"></param>
+    public void GameOver(Transform killerDrone)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit info))
-        {
-            var worldPos = info.point;
+        IsGameOver = true;
 
-            waveController.EmitWave(worldPos, 15, 6, Color.white);
-        }
+        // block cam and look at drone who killed player
+        this.fpsController.enableCameraMovement = false;
+        this.fpsController.playerCanMove = false;
+        this.killerDrone = killerDrone;
+
+        // TODO: add ui display "GameOver"
+
+        // Restart level after delay
+        StartCoroutine(RestartLevelAfterDelay(4f));
     }
-#endif
+
+    private IEnumerator RestartLevelAfterDelay(float s)
+    {
+        yield return new WaitForSeconds(s);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

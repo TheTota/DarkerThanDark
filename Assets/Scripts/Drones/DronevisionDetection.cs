@@ -30,7 +30,7 @@ public class DroneVisionDetection : MonoBehaviour
             if (hit.transform.CompareTag("Player") && (angle <= visionAngleOnEachSide && angle >= -visionAngleOnEachSide))
             {
                 Debug.DrawLine(this.transform.position, hit.point, Color.green);
-                this.drone.KillThePlayer();
+                this.drone.KillThePlayer(hit.transform.GetComponent<Player>());
             }
             else
             {
