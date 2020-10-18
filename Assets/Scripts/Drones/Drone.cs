@@ -29,6 +29,8 @@ public class Drone : MonoBehaviour
     private NavMeshAgent navAgent;
     private int patrollingPointsIndex;
 
+    private bool canMove = true;
+
     private void Awake()
     {
         lastPointChangeTime = Time.time;
@@ -47,13 +49,16 @@ public class Drone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (type == DroneType.Sentry)
+        if (canMove)
         {
-            DoSentryBehaviour();
-        }
-        else if (type == DroneType.Patroller)
-        {
-            DoPatrollerBehaviour();
+            if (type == DroneType.Sentry)
+            {
+                DoSentryBehaviour();
+            }
+            else if (type == DroneType.Patroller)
+            {
+                DoPatrollerBehaviour();
+            }
         }
     }
 
@@ -115,9 +120,27 @@ public class Drone : MonoBehaviour
         }
     }
 
-    public void KillThePlayer()
+    public void KillThePlayer(Player p)
     {
-        // TODO: kill the player
-        Debug.Log("Kill the player!");
+        if (!p.IsGameOver)
+        {
+            Debug.Log("Kill the player!");
+
+            // Stop movement & look at player
+            this.canMove = false;
+            this.navAgent.isStopped = true;
+            this.body.LookAt(p.transform);
+
+            // Emit more waves
+            var dronePeriodicWaveEmitter = GetComponent<PeriodicWaveEmitter>();
+            dronePeriodicWaveEmitter.SetValues(
+                dronePeriodicWaveEmitter.GetSecondsBetweenWaves() / 4f,
+                dronePeriodicWaveEmitter.GetWavesRadius(),
+                dronePeriodicWaveEmitter.GetWavesSpeed(),
+                Color.red
+            );
+
+            p.GameOver(this.transform);
+        }
     }
 }

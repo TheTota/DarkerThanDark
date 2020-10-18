@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private WaveController waveController;
+    private FirstPersonAIO fpsController;
 
     // Shout
     [Header("Shout")]
@@ -18,6 +20,13 @@ public class Player : MonoBehaviour
     private float lastStepTime;
     private bool steppingRight = true;
 
+    public bool IsGameOver { get; set; }
+
+    private void Awake()
+    {
+        this.fpsController = GetComponent<FirstPersonAIO>();
+    }
+
     private void Start()
     {
         waveController = WaveController.Instance;
@@ -31,7 +40,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Player "emits" a wave
-        if (Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
+        if (!IsGameOver && Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
         {
             SpawnWaveOnPlayerPos();
             lastShoutTime = Time.time;
@@ -79,6 +88,16 @@ public class Player : MonoBehaviour
             waveController.EmitWave(hit.point, 15, 4, Color.white); 
             // TODO: play footstep sound here
         }
+    }
+    
+    public void GameOver(Transform killerDrone)
+    {
+        IsGameOver = true;
+
+        // block cam and look at drone who killed player
+        this.fpsController.enableCameraMovement = false;
+        this.fpsController.playerCanMove = false; 
+        Camera.main.transform.LookAt(killerDrone);
     }
 
 #if UNITY_EDITOR

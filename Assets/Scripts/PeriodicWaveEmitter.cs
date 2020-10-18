@@ -13,6 +13,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
     [SerializeField] private Color wavesColor = Color.white;
     private float lastWaveTime;
 
+
     private void Start()
     {
         waveController = WaveController.Instance;
@@ -24,9 +25,36 @@ public class PeriodicWaveEmitter : MonoBehaviour
         // Emit waves
         if (Time.time - lastWaveTime >= secondsBetweenWaves)
         {
-            waveController.EmitWave(this.transform.position, wavesRadius, wavesSpeed, wavesColor);
+            Wave w = new Wave(this.transform.position, wavesRadius, wavesSpeed, wavesColor);
+            waveController.EmitWave(w);
             lastWaveTime = Time.time;
         }
     }
+    public void SetValues(float secondsBetweenWaves, float wavesRadius, float wavesSpeed, Color wavesColor)
+    {
+        this.secondsBetweenWaves = secondsBetweenWaves;
+        this.wavesRadius = wavesRadius;
+        this.wavesSpeed = wavesSpeed;
+        this.wavesColor = wavesColor;
+    }
 
+    public float GetSecondsBetweenWaves()
+    {
+        return this.secondsBetweenWaves;
+    }
+
+    public float GetWavesRadius()
+    {
+        return this.wavesRadius;
+    }
+
+    public float GetWavesSpeed()
+    {
+        return this.wavesSpeed;
+    }
+
+    public Color GetWavesColor()
+    {
+        return this.wavesColor;
+    }
 }

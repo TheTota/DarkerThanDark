@@ -859,7 +859,17 @@ PrefabInstance:
     - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
         type: 3}
       propertyPath: maximumWaves
-      value: 20
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
+        type: 3}
+      propertyPath: waveRadiusWidth
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
+        type: 3}
+      propertyPath: waveTrailWidth
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4070213196848133371, guid: dce3aa47b824ba442a43a41caa611f17,
         type: 3}
