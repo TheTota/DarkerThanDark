@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 942861499}
   - component: {fileID: 942861498}
   - component: {fileID: 942861497}
+  - component: {fileID: 942861500}
   m_Layer: 5
   m_Name: ExitGame
   m_TagString: Untagged
@@ -534,36 +535,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942861495}
   m_CullTransparentMesh: 0
---- !u!1 &1052540206
-GameObject:
+--- !u!225 &942861500
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1052540207}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1052540207
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052540206}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 897.2921, y: 547.87054, z: -17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 942861495}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1501911636
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +559,7 @@ GameObject:
   - component: {fileID: 1501911639}
   - component: {fileID: 1501911638}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -710,6 +693,7 @@ GameObject:
   - component: {fileID: 1752623831}
   - component: {fileID: 1752623830}
   - component: {fileID: 1752623829}
+  - component: {fileID: 1752623832}
   m_Layer: 5
   m_Name: PlayGame
   m_TagString: Untagged
@@ -828,6 +812,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752623827}
   m_CullTransparentMesh: 0
+--- !u!225 &1752623832
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752623827}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1822413632
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +837,8 @@ GameObject:
   - component: {fileID: 1822413634}
   - component: {fileID: 1822413633}
   - component: {fileID: 1822413637}
+  - component: {fileID: 1822413639}
+  - component: {fileID: 1822413638}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -942,6 +940,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 318c31dbe3457584db7b53238032b13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1822413638
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822413632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 463a1b3973071a744ba3da64272e8f13, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1822413639
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822413632}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1913014316
 GameObject:
   m_ObjectHideFlags: 0

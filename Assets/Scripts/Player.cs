@@ -121,10 +121,10 @@ public class Player : MonoBehaviour
         this.fpsController.playerCanMove = false;
         this.killerDrone = killerDrone;
 
-        // TODO: add ui display "GameOver"
-
+        // UI display "GameOver"
+        GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Animator>().SetBool("GameOver", true);
         // Restart level after delay
-        StartCoroutine(RestartLevelAfterDelay(4f));
+        StartCoroutine(RestartLevelAfterDelay(5f));
     }
 
     private IEnumerator RestartLevelAfterDelay(float s)

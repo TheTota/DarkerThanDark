@@ -143,7 +143,7 @@ public class Drone : MonoBehaviour
                 Color.red
             );
 
-            p.GameOver(this.transform);
+            p.GameOver(this.body.transform);
         }
     }
 }
