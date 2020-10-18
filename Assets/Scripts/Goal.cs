@@ -33,7 +33,7 @@ public class Goal : MonoBehaviour
     private static void LoadNextLevel()
     {
         int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentBuildIndex + 1 <= SceneManager.sceneCount)
+        if (currentBuildIndex + 1 <= SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(currentBuildIndex + 1);
         }
