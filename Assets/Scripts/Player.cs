@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
+        waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
         // TODO: play "scream" sound here (if that's what we wanna do)
     }
 
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(hit.point, 15, 4, Color.white); 
+            waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white)); 
             // TODO: play footstep sound here
         }
     }

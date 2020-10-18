@@ -25,8 +25,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
         // Emit waves
         if (Time.time - lastWaveTime >= secondsBetweenWaves)
         {
-            Wave w = new Wave(this.transform.position, wavesRadius, wavesSpeed, wavesColor);
-            waveController.EmitWave(w);
+            waveController.EmitWave(new Wave(this.transform.position, wavesRadius, wavesSpeed, wavesColor));
             lastWaveTime = Time.time;
         }
     }

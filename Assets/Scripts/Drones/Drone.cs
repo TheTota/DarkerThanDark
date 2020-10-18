@@ -60,6 +60,12 @@ public class Drone : MonoBehaviour
                 DoPatrollerBehaviour();
             }
         }
+
+        // if we have a target point, rotate towards it
+        if (this.targetPoint && (type == DroneType.Sentry || !canMove))
+        {
+            this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), sentryRotationSpeed * Time.deltaTime);
+        }
     }
 
     private void DoSentryBehaviour()
@@ -84,12 +90,6 @@ public class Drone : MonoBehaviour
                 this.targetPoint = sentryPointsParent.GetChild(sentryPointsIndex);
 
                 this.lastPointChangeTime = Time.time;
-            }
-
-            // if we have a target point, rotate towards it
-            if (this.targetPoint)
-            {
-                this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), sentryRotationSpeed * Time.deltaTime);
             }
         }
     }
@@ -126,10 +126,13 @@ public class Drone : MonoBehaviour
         {
             Debug.Log("Kill the player!");
 
-            // Stop movement & look at player
+            // Stop movement & look at player (smoothly)
             this.canMove = false;
-            this.navAgent.isStopped = true;
-            this.body.LookAt(p.transform);
+            if (this.navAgent)
+            {
+                this.navAgent.isStopped = true;
+            }
+            this.targetPoint = p.transform;
 
             // Emit more waves
             var dronePeriodicWaveEmitter = GetComponent<PeriodicWaveEmitter>();
