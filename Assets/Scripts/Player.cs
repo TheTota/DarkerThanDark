@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using FMODUnity;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private WaveController waveController;
+    private WaveController waveController;
+    private FirstPersonAIO fpsController;
+    private Camera mainCam;
 
     // Shout
     [Header("Shout")]
@@ -18,10 +24,24 @@ public class Player : MonoBehaviour
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
+    
+    // Game Over
+    [Header("Game Over")]
+    [SerializeField] private float cameraRotationSpeed = 100f;
+    public bool IsGameOver { get; set; }
+    private Transform killerDrone;
+    
+    private void Awake()
+    {
+        this.fpsController = GetComponent<FirstPersonAIO>();
+        this.mainCam = Camera.main;
+    }
 
 
     private void Start()
     {
+        waveController = WaveController.Instance;
+
         lastPos = this.transform.position;
         lastStepTime = Time.time;
         lastShoutTime = Time.time;
@@ -31,10 +51,20 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Player "emits" a wave
-        if (Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
+        if (!IsGameOver && Input.GetMouseButtonDown(0) && Time.time - lastShoutTime >= delayBetweenShouts)
         {
             SpawnWaveOnPlayerPos();
             lastShoutTime = Time.time;
+        }
+        else if (IsGameOver)
+        {
+            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDrone.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
+        }
+
+        // Escape to return to leave the game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
@@ -60,6 +90,7 @@ public class Player : MonoBehaviour
         waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
         // play "scream" sound 
         RuntimeManager.PlayOneShot("event:/Scream");
+
     }
 
     /// <summary>
@@ -80,22 +111,32 @@ public class Player : MonoBehaviour
             waveController.EmitWave(hit.point, 15, 4, Color.white);
             // play footstep sound 
            RuntimeManager.PlayOneShot("event:/Steps");
+
         }
     }
-
-#if UNITY_EDITOR
+    
     /// <summary>
-    /// (UNUSED) Spawns a wave starting on the aimed position (aim with crosshair).
+    /// Turns player towards drone that spotted him, then restarts the level after a delay.
     /// </summary>
-    private void SpawnWaveOnCrosshairPos()
+    /// <param name="killerDrone"></param>
+    public void GameOver(Transform killerDrone)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit info))
-        {
-            var worldPos = info.point;
+        IsGameOver = true;
 
-            waveController.EmitWave(worldPos, 15, 6, Color.white);
-        }
+        // block cam and look at drone who killed player
+        this.fpsController.enableCameraMovement = false;
+        this.fpsController.playerCanMove = false;
+        this.killerDrone = killerDrone;
+
+        // UI display "GameOver"
+        GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Animator>().SetBool("GameOver", true);
+        // Restart level after delay
+        StartCoroutine(RestartLevelAfterDelay(5f));
     }
-#endif
+
+    private IEnumerator RestartLevelAfterDelay(float s)
+    {
+        yield return new WaitForSeconds(s);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

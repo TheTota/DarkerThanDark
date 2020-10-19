@@ -1,38 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
+    public static WaveController Instance { get; set; }
+
     [SerializeField] private Material material;
 
+
+    [Header("Waves Settings")]
+
+    [Range(1, 10)]
+    [SerializeField] private int waveColorIntensity = 1;
+
+    [Tooltip("This value represents the inner radius width")]
+    [Min(0.01f)]
+    [SerializeField] private float waveRadiusWidth = 0.01f;
+
+    [Tooltip("This value represents the distance between the circle and its origin in percente")]
+    [Range(0f, 1f)]
+    [SerializeField] private float waveTrailWidth = 0f;
+
+    [Tooltip("Maximum number of waves which the controller can handle")]
     [Range(1, shaderArraySizeLimit)]
     [SerializeField] private int maximumWaves = 1;
+    
+
+    [Header("Waves Debug")]
 
     [SerializeField] private List<Wave> waves;
 
     // Value fixed and synchronized with the maximum size of an array in the shader
     private const int shaderArraySizeLimit = 100;
 
+    private static Vector4[] EMPTY_VECTOR4_ARRAY = new Vector4[shaderArraySizeLimit];
+    private static float[] EMPTY_FLOAT_ARRAY = new float[shaderArraySizeLimit];
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         waves = new List<Wave>();
 
         // Set the maximum size of the arrays used by the shader 
-        material.SetVectorArray("_Origins", new Vector4[shaderArraySizeLimit]);
-        material.SetFloatArray("_Radius", new float[shaderArraySizeLimit]);
-        material.SetVectorArray("_Colors", new Vector4[shaderArraySizeLimit]);
+        material.SetVectorArray("_Origins", EMPTY_VECTOR4_ARRAY);
+        material.SetFloatArray("_Radius", EMPTY_FLOAT_ARRAY);
+        material.SetVectorArray("_Colors", EMPTY_VECTOR4_ARRAY);
     }
 
     private void Update()
     {
         material.SetInt("_WavesCount", waves.Count);
+        material.SetFloat("_WaveColorIntensity", waveColorIntensity);
+        material.SetFloat("_WaveRadiusWidth", waveRadiusWidth);
+        material.SetFloat("_WaveTrailWidth", waveTrailWidth);
 
         HandleWaves();
 
         UpdateShader();
+
+        waves = FilterWaves();
     }
 
 
@@ -43,11 +75,23 @@ public class WaveController : MonoBehaviour
     /// <param name="radius"></param>
     /// <param name="speed"></param>
     /// <param name="color"></param>
+    [Obsolete("This method is obselete. Use EmitWave(Wave) instead")]
     public void EmitWave(Vector3 worldPos, float radius, float speed, Color color)
     {
         if (waves.Count >= maximumWaves) return;
 
         var wave = new Wave(worldPos, radius, speed, color);
+
+        waves.Insert(0, wave);
+    }
+
+    /// <summary>
+    /// Emit a wave which is updated over time.
+    /// </summary>
+    /// <param name="wave"></param>
+    public void EmitWave(Wave wave)
+    {
+        if (waves.Count >= maximumWaves) return;
 
         waves.Insert(0, wave);
     }
@@ -63,8 +107,6 @@ public class WaveController : MonoBehaviour
             var wave = waves[i];
             wave.UpdateDistance(Time.deltaTime);
         }
-
-        waves = waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
 
@@ -76,13 +118,28 @@ public class WaveController : MonoBehaviour
         if (waves.Count > 0)
         {
             Vector4[] shaderOrigins = GetShaderOrigins(waves);
-            float[] radius = ExtractArray(waves, wave => wave.Radius);
-            Vector4[] colors = ExtractArray(waves, wave => (Vector4)wave.Color);
+            float[] radius = waves.Select(wave => wave.Radius).ToArray();
+            Vector4[] colors = waves.Select(wave => (Vector4) wave.Color).ToArray();
 
             material.SetVectorArray("_Origins", shaderOrigins);
             material.SetFloatArray("_Radius", radius);
             material.SetVectorArray("_Colors", colors);
+        } 
+        else
+        {
+            material.SetVectorArray("_Origins", EMPTY_VECTOR4_ARRAY);
+            material.SetFloatArray("_Radius", EMPTY_FLOAT_ARRAY);
+            material.SetVectorArray("_Colors", EMPTY_VECTOR4_ARRAY);
         }
+    }
+
+    /// <summary>
+    /// Filter waves by removing the older ones
+    /// </summary>
+    /// <returns></returns>
+    private List<Wave> FilterWaves()
+    {
+        return waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
     }
 
     /// <summary>
@@ -94,8 +151,8 @@ public class WaveController : MonoBehaviour
     {
         var shaderOrigins = new Vector4[waves.Count];
 
-        Vector3[] origins = ExtractArray(waves, wave => wave.Origin);
-        float[] distances = ExtractArray(waves, wave => wave.Distance);
+        Vector3[] origins = waves.Select(wave => wave.Origin).ToArray();
+        float[] distances = waves.Select(wave => wave.Distance).ToArray();
 
         for (int i = 0; i < origins.Count(); i++)
         {
@@ -107,26 +164,4 @@ public class WaveController : MonoBehaviour
 
         return shaderOrigins.ToArray();
     }
-
-    /// <summary>
-    /// Generic method which extracts an array of values by specifying a selector which is called on each elements of the list.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="waves"></param>
-    /// <param name="selector">Evaluated on each item of the waves list</param>
-    /// <returns></returns>
-    private static T[] ExtractArray<T>(List<Wave> waves, Func<Wave, T> selector)
-    {
-        var values = new List<T>();
-
-        foreach (var wave in waves)
-        {
-            var extractedValue = selector(wave);
-
-            values.Add(extractedValue);
-        }
-
-        return values.ToArray();
-    }
-
 }

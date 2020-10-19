@@ -24,21 +24,30 @@
             float _Radius[100];
             fixed4 _Colors[100];
 
+            // Configurable parameters
+            float _WaveColorIntensity;
+            float _WaveRadiusWidth;
+            float _WaveTrailWidth;
+
             struct appdata
             {
                 float4 vertex : POSITION;
+                float uv : TEXCOORD0;
             };
 
             struct v2f
             {
-                float4 vertex : SV_POSITION; 
+                float4 vertex : SV_POSITION;
+                float uv : TEXCOORD0;
                 float3 worldPos : TEXCOORD1;
             };
 
-            float smoothstep(float a, float b, float x)
-            {
-                float t = saturate((x - a)/(b - a));
-                return t*t*(3.0 - (2.0*t));
+            float ComputeWaveTrail(float dist, float waveDistance, float innerCirclePercent) {
+                float waveTrail = step(dist, waveDistance);
+                float innerCircleDistance = dist - innerCirclePercent * waveDistance;
+                float waveTrailWidth =  innerCircleDistance / waveDistance;
+
+                return waveTrail * waveTrailWidth;
             }
 
             fixed4 MultipleFragWave(float3 worldPos) {
@@ -46,17 +55,20 @@
 
                 for(int i = 0; i < _WavesCount; i++) {
                     float dist = distance(worldPos.xyz, _Origins[i].xyz);
-                    float radiusWave = _Radius[i] *  _Origins[i].w;
-                    float width = 0.2;    
+                    float circleWave = _Radius[i] *  _Origins[i].w; 
+                    float circleWidth = _WaveRadiusWidth;    
                     
-                    float upper = radiusWave + 0.5 * width;
-                    float lower = radiusWave - 0.5 * width;
+                    float upper = circleWave + 0.5 * circleWidth;
+                    float lower = circleWave - 0.5 * circleWidth;
 
-                    float val = smoothstep(lower, radiusWave, dist) - smoothstep(radiusWave, upper, dist);
-                    val = val * (_Radius[i] - radiusWave) / _Radius[i];
-                    val = 2 * pow(val, 4);
+                    float val = smoothstep(lower, circleWave, dist) - smoothstep(circleWave, upper, dist);
+
+                    // Compute wave trail and width
+                    float waveTrail = ComputeWaveTrail(dist, circleWave, 1 - _WaveTrailWidth);
+
+                    float fadeFactor = (_Radius[i] - circleWave) / _Radius[i];
                     
-                    finalVal += max(0, val) * _Colors[i];
+                    finalVal = 1 * max(finalVal, _Colors[i] * (_WaveColorIntensity * val + waveTrail) * fadeFactor);
                 }
 
                 return finalVal;
@@ -67,12 +79,15 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                o.uv = v.uv;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {           
-                return MultipleFragWave(i.worldPos);
+                fixed4 color = MultipleFragWave(i.worldPos);
+
+                return color;
             }
             ENDCG
         }
