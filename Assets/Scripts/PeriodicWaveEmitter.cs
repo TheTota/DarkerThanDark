@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class PeriodicWaveEmitter : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
         {
             waveController.EmitWave(new Wave(this.transform.position, wavesRadius, wavesSpeed, wavesColor));
             lastWaveTime = Time.time;
+            RuntimeManager.PlayOneShot("event:/ExitPing", transform.position);
         }
     }
     public void SetValues(float secondsBetweenWaves, float wavesRadius, float wavesSpeed, Color wavesColor)

@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
     {
         waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
         // play "scream" sound 
-        RuntimeManager.PlayOneShot("event:/Scream");
+        RuntimeManager.PlayOneShot("event:/Scream", transform.position);
 
     }
 
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         {
             waveController.EmitWave(hit.point, 15, 4, Color.white);
             // play footstep sound 
-           RuntimeManager.PlayOneShot("event:/Steps");
+           RuntimeManager.PlayOneShot("event:/Steps", transform.position);
 
         }
     }
