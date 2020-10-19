@@ -1,3 +1,5 @@
+﻿using UnityEngine;
+using FMODUnity;
 ﻿using System;
 using System.Collections;
 using UnityEngine;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         this.fpsController = GetComponent<FirstPersonAIO>();
         this.mainCam = Camera.main;
     }
+
 
     private void Start()
     {
@@ -84,8 +87,10 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
-        // TODO: play "scream" sound here (if that's what we wanna do)
+        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
+        // play "scream" sound 
+        RuntimeManager.PlayOneShot("event:/Scream");
+
     }
 
     /// <summary>
@@ -103,8 +108,10 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white)); 
-            // TODO: play footstep sound here
+            waveController.EmitWave(hit.point, 15, 4, Color.white);
+            // play footstep sound 
+           RuntimeManager.PlayOneShot("event:/Steps");
+
         }
     }
     
