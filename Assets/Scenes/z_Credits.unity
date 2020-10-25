@@ -816,6 +816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1019730272}
   - component: {fileID: 1019730273}
+  - component: {fileID: 1019730274}
   m_Layer: 5
   m_Name: CreditsGrid
   m_TagString: Untagged
@@ -870,6 +871,18 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!225 &1019730274
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019730271}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1063918059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1297,7 @@ GameObject:
   - component: {fileID: 1746890255}
   - component: {fileID: 1746890254}
   - component: {fileID: 1746890253}
+  - component: {fileID: 1746890256}
   m_Layer: 5
   m_Name: ExitGame
   m_TagString: Untagged
@@ -1402,6 +1416,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746890251}
   m_CullTransparentMesh: 0
+--- !u!225 &1746890256
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746890251}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1822413632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1441,7 @@ GameObject:
   - component: {fileID: 1822413634}
   - component: {fileID: 1822413633}
   - component: {fileID: 1822413637}
+  - component: {fileID: 1822413638}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1517,6 +1544,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 318c31dbe3457584db7b53238032b13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1822413638
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822413632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7b2c94a82a8b2e4a88e416e6d27a1b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2111082070
 GameObject:
   m_ObjectHideFlags: 0
