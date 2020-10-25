@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,21 +9,15 @@ public class LevelUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private GameObject gameOverObj;
+    [SerializeField] private RectTransform awarenessHandle;
 
     private void Awake()
     {
         levelText.text = "level " + SceneManager.GetActiveScene().buildIndex;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void RenderAwareness(float awarenessValue)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        awarenessHandle.localScale = new Vector3(awarenessValue, 1f, 1f);
     }
 }

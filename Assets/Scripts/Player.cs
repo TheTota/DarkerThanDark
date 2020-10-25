@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private WaveController waveController;
     private FirstPersonAIO fpsController;
     private Camera mainCam;
+    private LevelUI inGameUIGameObject;
 
     // Shout
     [Header("Shout")]
@@ -24,17 +25,23 @@ public class Player : MonoBehaviour
     private Vector3 lastPos;
     private float lastStepTime;
     private bool steppingRight = true;
-    
+
+    [Header("Awareness")]
+    [SerializeField] private float awarenessFullToEmptySeconds = 4f;
+    private Transform killerDrone;
+    private float awarenessValue = 0f; // value between 0 and 1, 1 being detection
+
     // Game Over
     [Header("Game Over")]
     [SerializeField] private float cameraRotationSpeed = 100f;
     public bool IsGameOver { get; set; }
-    private Transform killerDrone;
     
     private void Awake()
     {
+        this.awarenessValue = 1f;
         this.fpsController = GetComponent<FirstPersonAIO>();
         this.mainCam = Camera.main;
+        this.inGameUIGameObject = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<LevelUI>();
     }
 
 
@@ -61,11 +68,28 @@ public class Player : MonoBehaviour
             this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDrone.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
 
+        // Awareness system
+        HandleAwareness();
+
         // Escape to return to leave the game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
+    }
+
+    private void HandleAwareness()
+    {
+        if (awarenessValue > 0)
+        {
+            awarenessValue = Mathf.Clamp01(awarenessValue - (Time.deltaTime / awarenessFullToEmptySeconds));
+
+            inGameUIGameObject.RenderAwareness(awarenessValue);
+        }
+    }
+
+    private void RenderAwareness()
+    {
     }
 
     private void FixedUpdate()
@@ -87,7 +111,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(this.transform.position, 35, 4, Color.yellow);
+        waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
         // play "scream" sound 
         //RuntimeManager.PlayOneShot("event:/Scream");
 
@@ -108,9 +132,9 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(hit.point, 15, 4, Color.white);
+            waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white));
             // play footstep sound 
-           //RuntimeManager.PlayOneShot("event:/Steps");
+            //RuntimeManager.PlayOneShot("event:/Steps");
 
         }
     }
@@ -129,7 +153,7 @@ public class Player : MonoBehaviour
         this.killerDrone = killerDrone;
 
         // UI display "GameOver"
-        GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Animator>().SetBool("GameOver", true);
+        inGameUIGameObject.gameObject.GetComponent<Animator>().SetBool("GameOver", true);
         // Restart level after delay
         StartCoroutine(RestartLevelAfterDelay(5f));
     }
