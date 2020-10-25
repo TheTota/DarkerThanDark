@@ -105,7 +105,7 @@ MonoBehaviour:
   drone: {fileID: 919132147791120197}
   visionRange: 8
   visionAngleOnEachSide: 30
-  visionDetectionTime: 4
+  visionDetectionTime: 7
 --- !u!1 &325703750628134311
 GameObject:
   m_ObjectHideFlags: 0
