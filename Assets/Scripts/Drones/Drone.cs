@@ -31,8 +31,12 @@ public class Drone : MonoBehaviour
 
     private bool canMove = true;
 
+    public PeriodicWaveEmitter PeriodicWavesEmitter { get; set; }
+
     private void Awake()
     {
+        PeriodicWavesEmitter = GetComponent<PeriodicWaveEmitter>();
+
         lastPointChangeTime = Time.time;
         sentryPointsIndex = -1;
         patrollingPointsIndex = 1;
@@ -120,30 +124,26 @@ public class Drone : MonoBehaviour
         }
     }
 
-    public void KillThePlayer(Player p)
+    /// <summary>
+    /// Put the current drone in game over state : looks at player and stops moving.
+    /// </summary>
+    /// <param name="p"></param>
+    public void EnterGameOverState(Player p)
     {
-        if (!p.IsGameOver)
+        // Stop movement & look at player (smoothly)
+        this.canMove = false;
+        if (this.navAgent)
         {
-            Debug.Log("Kill the player!");
-
-            // Stop movement & look at player (smoothly)
-            this.canMove = false;
-            if (this.navAgent)
-            {
-                this.navAgent.isStopped = true;
-            }
-            this.targetPoint = p.transform;
-
-            // Emit more waves
-            var dronePeriodicWaveEmitter = GetComponent<PeriodicWaveEmitter>();
-            dronePeriodicWaveEmitter.SetValues(
-                dronePeriodicWaveEmitter.GetSecondsBetweenWaves() / 4f,
-                dronePeriodicWaveEmitter.GetWavesRadius(),
-                dronePeriodicWaveEmitter.GetWavesSpeed(),
-                Color.red
-            );
-
-            p.GameOver(this.body.transform);
+            this.navAgent.isStopped = true;
         }
+        this.targetPoint = p.transform;
+
+        // Emit more waves
+        PeriodicWavesEmitter.SetValues(
+            PeriodicWavesEmitter.GetSecondsBetweenWaves() / 4f,
+            PeriodicWavesEmitter.GetWavesRadius(),
+            PeriodicWavesEmitter.GetWavesSpeed(),
+            Color.red
+        );
     }
 }
