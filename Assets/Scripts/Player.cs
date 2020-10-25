@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
             SpawnWaveOnPlayerPos();
             lastShoutTime = Time.time;
         }
-        else if (IsGameOver)
+        else if (IsGameOver) // Smoothly rotate cam towards killer drone
         {
             this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDroneTransform.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
@@ -79,14 +79,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles awareness rendering, lowering when no contact with drones and triggering game over.
+    /// Called every frame in he update function.
+    /// </summary>
     private void HandleAwareness()
     {
+        // if awareness reaches 1, trigger game over
         if (awarenessValue == 1f && !IsGameOver)
         {
             GameOver();
         }
-        else if (awarenessValue > 0f)
+        else if (awarenessValue > 0f) 
         {
+            // if we're not interacting with any drone, chill the waves and lower the awareness
             if (!isAwarenessTriggered)
             {
                 killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.yellow);
@@ -94,16 +100,25 @@ public class Player : MonoBehaviour
             }
             isAwarenessTriggered = false;
 
+            // render awareness on UI
             inGameUIGameObject.RenderAwareness(awarenessValue);
         }
     }
 
+    /// <summary>
+    /// Increase the awareness with a given value and infos about the drone causing it.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="droneTranform"></param>
+    /// <param name="droneScript"></param>
     public void IncreaseAwarenessValue(float value, Transform droneTranform, Drone droneScript)
     {
         isAwarenessTriggered = true;
+
         killerDroneTransform = droneTranform;
         killerDroneScript = droneScript;
         killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.red);
+
         this.awarenessValue = Mathf.Clamp01(this.awarenessValue + value);
     }
 
@@ -173,6 +188,11 @@ public class Player : MonoBehaviour
         StartCoroutine(RestartLevelAfterDelay(5f));
     }
 
+    /// <summary>
+    /// Restart level after "s" seconds.
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
     private IEnumerator RestartLevelAfterDelay(float s)
     {
         yield return new WaitForSeconds(s);

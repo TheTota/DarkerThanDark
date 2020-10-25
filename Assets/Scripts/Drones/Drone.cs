@@ -124,6 +124,10 @@ public class Drone : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Put the current drone in game over state : looks at player and stops moving.
+    /// </summary>
+    /// <param name="p"></param>
     public void EnterGameOverState(Player p)
     {
         // Stop movement & look at player (smoothly)
