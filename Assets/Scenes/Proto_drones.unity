@@ -624,7 +624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &833783331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -927,6 +927,11 @@ PrefabInstance:
       propertyPath: awarenessHandle
       value: 
       objectReference: {fileID: 934756102}
+    - target: {fileID: 7903735226203673986, guid: 97f4459380c9ccf4bbcc940f6b1a3000,
+        type: 3}
+      propertyPath: awarenessObj
+      value: 
+      objectReference: {fileID: 833783330}
     - target: {fileID: 7903735226203673989, guid: 97f4459380c9ccf4bbcc940f6b1a3000,
         type: 3}
       propertyPath: m_Name

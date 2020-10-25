@@ -9,6 +9,7 @@ public class LevelUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private GameObject gameOverObj;
+    [SerializeField] private GameObject awarenessObj;
     [SerializeField] private RectTransform awarenessHandle;
 
     private void Awake()
@@ -18,6 +19,17 @@ public class LevelUI : MonoBehaviour
 
     public void RenderAwareness(float awarenessValue)
     {
+        // Show or hide the awareness slider
+        if (awarenessValue == 0 && awarenessObj.activeInHierarchy)
+        {
+            awarenessObj.SetActive(false);
+        }
+        else if (awarenessValue > 0 && !awarenessObj.activeInHierarchy)
+        {
+            awarenessObj.SetActive(true);
+        }
+
+        // Render the awareness value
         awarenessHandle.localScale = new Vector3(awarenessValue, 1f, 1f);
     }
 }
