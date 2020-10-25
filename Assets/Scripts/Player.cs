@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 //using FMODUnity; TODO: uncomment when fixed
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,17 +28,18 @@ public class Player : MonoBehaviour
 
     [Header("Awareness")]
     [SerializeField] private float awarenessFullToEmptySeconds = 4f;
-    private Transform killerDrone;
+    private Transform killerDroneTransform;
+    private Drone killerDroneScript;
     private float awarenessValue = 0f; // value between 0 and 1, 1 being detection
+    private bool isAwarenessTriggered = false;
 
     // Game Over
     [Header("Game Over")]
     [SerializeField] private float cameraRotationSpeed = 100f;
     public bool IsGameOver { get; set; }
-    
+
     private void Awake()
     {
-        this.awarenessValue = 1f;
         this.fpsController = GetComponent<FirstPersonAIO>();
         this.mainCam = Camera.main;
         this.inGameUIGameObject = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<LevelUI>();
@@ -65,7 +66,7 @@ public class Player : MonoBehaviour
         }
         else if (IsGameOver)
         {
-            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDrone.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
+            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDroneTransform.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
 
         // Awareness system
@@ -80,16 +81,30 @@ public class Player : MonoBehaviour
 
     private void HandleAwareness()
     {
-        if (awarenessValue > 0)
+        if (awarenessValue == 1f && !IsGameOver)
         {
-            awarenessValue = Mathf.Clamp01(awarenessValue - (Time.deltaTime / awarenessFullToEmptySeconds));
+            GameOver();
+        }
+        else if (awarenessValue > 0f)
+        {
+            if (!isAwarenessTriggered)
+            {
+                killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.yellow);
+                awarenessValue = Mathf.Clamp01(awarenessValue - (Time.deltaTime / awarenessFullToEmptySeconds));
+            }
+            isAwarenessTriggered = false;
 
             inGameUIGameObject.RenderAwareness(awarenessValue);
         }
     }
 
-    private void RenderAwareness()
+    public void IncreaseAwarenessValue(float value, Transform droneTranform, Drone droneScript)
     {
+        isAwarenessTriggered = true;
+        killerDroneTransform = droneTranform;
+        killerDroneScript = droneScript;
+        killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.red);
+        this.awarenessValue = Mathf.Clamp01(this.awarenessValue + value);
     }
 
     private void FixedUpdate()
@@ -138,19 +153,19 @@ public class Player : MonoBehaviour
 
         }
     }
-    
+
     /// <summary>
     /// Turns player towards drone that spotted him, then restarts the level after a delay.
     /// </summary>
     /// <param name="killerDrone"></param>
-    public void GameOver(Transform killerDrone)
+    public void GameOver()
     {
         IsGameOver = true;
 
         // block cam and look at drone who killed player
         this.fpsController.enableCameraMovement = false;
         this.fpsController.playerCanMove = false;
-        this.killerDrone = killerDrone;
+        this.killerDroneScript.EnterGameOverState(this);
 
         // UI display "GameOver"
         inGameUIGameObject.gameObject.GetComponent<Animator>().SetBool("GameOver", true);

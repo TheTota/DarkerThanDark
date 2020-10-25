@@ -8,6 +8,7 @@ public class DroneVisionDetection : MonoBehaviour
     [Header("Vision")]
     [SerializeField] private float visionRange = 8f;
     [SerializeField] private float visionAngleOnEachSide = 30f;
+    [SerializeField] private float visionDetectionTime = 4f;
     private Transform playerTransform;
 
     // Start is called before the first frame update
@@ -30,8 +31,9 @@ public class DroneVisionDetection : MonoBehaviour
             if (hit.transform.CompareTag("Player") && (angle <= visionAngleOnEachSide && angle >= -visionAngleOnEachSide))
             {
                 Debug.DrawLine(this.transform.position, hit.point, Color.green);
-                // TODO: add awareness system
-                this.drone.KillThePlayer(hit.transform.GetComponent<Player>());
+
+                Player p = hit.transform.GetComponent<Player>();
+                p.IncreaseAwarenessValue(Time.deltaTime / visionDetectionTime, drone.body.transform, drone);
             }
             else
             {

@@ -56,4 +56,9 @@ public class PeriodicWaveEmitter : MonoBehaviour
     {
         return this.wavesColor;
     }
+
+    public void SetWavesColor(Color c)
+    {
+        this.wavesColor = c;
+    }
 }
