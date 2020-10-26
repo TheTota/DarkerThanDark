@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{841a1126-bd0c-4f19-89cd-070b39653ae5}">
+		<property name="assetPath">
+			<value>Dark Ambiant With Kind of Footsteps.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>35.970864583333331</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{472c3eb9-5c2b-4966-8511-79f7f9d61549}</destination>
+		</relationship>
+	</object>
+</objects>

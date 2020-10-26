@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-//using FMODUnity; TODO: uncomment when fixed
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -143,7 +143,8 @@ public class Player : MonoBehaviour
     {
         waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
         // play "scream" sound 
-        //RuntimeManager.PlayOneShot("event:/Scream");
+        RuntimeManager.PlayOneShot("event:/Scream", transform.position);
+
 
     }
 
@@ -164,7 +165,8 @@ public class Player : MonoBehaviour
         {
             waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white));
             // play footstep sound 
-            //RuntimeManager.PlayOneShot("event:/Steps");
+           RuntimeManager.PlayOneShot("event:/Steps", transform.position);
+
 
         }
     }
