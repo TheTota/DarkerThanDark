@@ -350,6 +350,7 @@ MonoBehaviour:
   delayBetweenShouts: 1
   delayBetweenFootsteps: 0.7
   offsetBetweenSteps: 0.3
+  awarenessFullToEmptySeconds: 4
   cameraRotationSpeed: 100
 --- !u!1 &705507993
 GameObject:
@@ -753,6 +754,11 @@ PrefabInstance:
       propertyPath: waveController
       value: 
       objectReference: {fileID: 1596255430}
+    - target: {fileID: 4059144418332755676, guid: 1a983c6fa15619b4e995239edc0abf0e,
+        type: 3}
+      propertyPath: wavesRadius
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4129026336976066976, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}
       propertyPath: m_Name

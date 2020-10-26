@@ -5,12 +5,14 @@ using UnityEngine;
 public class DroneDetectionProximity : MonoBehaviour
 {
     [SerializeField] private Drone drone;
+    [SerializeField] private float detectionTime = 1f;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            drone.KillThePlayer(other.transform.GetComponent<Player>());
+            Player p = other.transform.GetComponent<Player>();
+            p.IncreaseAwarenessValue(Time.deltaTime / detectionTime, drone.body.transform, drone);
         }
     }
 }
