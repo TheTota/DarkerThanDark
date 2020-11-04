@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291417346a792df4e9074b9848d8ea45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsBetweenWaves: 2
-  wavesRadius: 10
-  wavesSpeed: 4
+  secondsBetweenWaves: 0.5
+  wavesRadius: 3
+  wavesSpeed: 0.7
   wavesColor: {r: 0, g: 1, b: 0, a: 1}

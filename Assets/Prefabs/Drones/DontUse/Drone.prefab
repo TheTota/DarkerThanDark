@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsBetweenWaves: 3
-  wavesRadius: 10
+  wavesRadius: 6
   wavesSpeed: 4
   wavesColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!114 &919132147791120197
