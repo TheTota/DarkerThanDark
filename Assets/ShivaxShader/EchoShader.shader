@@ -24,6 +24,10 @@
             float _Radius[100];
             fixed4 _Colors[100];
 
+            // directional wave
+            float3 _Directions[100];
+            float _Angles[100];
+
             // Configurable parameters
             float _WaveColorIntensity;
             float _WaveRadiusWidth;
@@ -50,25 +54,45 @@
                 return waveTrail * waveTrailWidth;
             }
 
+            float ComputeDirectionalWaveFilter(float3 worldPos, float3 origin, float3 direction, float angle) {
+                float desiredAngle = angle / 2;
+                
+                float directionAngle = atan2(direction.z, direction.x);
+                float fragmentAngle = atan2(worldPos.z - origin.z, worldPos.x - origin.x);
+
+                float endAngle = directionAngle + desiredAngle;
+                float startAngle = directionAngle - desiredAngle;
+                    
+                return step(startAngle, fragmentAngle) - step(endAngle, fragmentAngle);
+            }
+
+            float GetDirectionalWaveFilter(float3 worldPos, float3 origin, float3 direction, float angle) {
+                return angle > 0 ? ComputeDirectionalWaveFilter(worldPos, origin, direction, angle) : 1;                
+            }
+
             fixed4 MultipleFragWave(float3 worldPos) {
                 fixed4 finalVal = fixed4(0,0,0,0);
 
                 for(int i = 0; i < _WavesCount; i++) {
                     float dist = distance(worldPos.xyz, _Origins[i].xyz);
                     float circleWave = _Radius[i] *  _Origins[i].w; 
-                    float circleWidth = _WaveRadiusWidth;    
+                    float circleWidth = _WaveRadiusWidth;  
                     
+                    // calculate angle          
                     float upper = circleWave + 0.5 * circleWidth;
                     float lower = circleWave - 0.5 * circleWidth;
 
                     float val = smoothstep(lower, circleWave, dist) - smoothstep(circleWave, upper, dist);
 
+                    // compute filter if wave is directional
+                    float directionalWaveFilter = GetDirectionalWaveFilter(worldPos, _Origins[i], _Directions[i], _Angles[i]);
+                 
                     // Compute wave trail and width
                     float waveTrail = ComputeWaveTrail(dist, circleWave, 1 - _WaveTrailWidth);
 
                     float fadeFactor = (_Radius[i] - circleWave) / _Radius[i];
                     
-                    finalVal = 1 * max(finalVal, _Colors[i] * (_WaveColorIntensity * val + waveTrail) * fadeFactor);
+                    finalVal = max(finalVal, _Colors[i] * directionalWaveFilter * (_WaveColorIntensity * val + waveTrail) * fadeFactor);
                 }
 
                 return finalVal;
