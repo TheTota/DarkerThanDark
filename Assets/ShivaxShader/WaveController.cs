@@ -97,8 +97,6 @@ public class WaveController : MonoBehaviour
     /// <param name="wave"></param>
     public void EmitWave(Wave wave)
     {
-        if (waves.Count >= maximumWaves) return;
-
         AddWave(wave, Vector3.zero, 0);
     }
 
@@ -108,13 +106,13 @@ public class WaveController : MonoBehaviour
     /// <param name="wave"></param>
     public void EmitDirectionalWave(Wave wave, Vector3 direction, float angle)
     {
-        if (waves.Count >= maximumWaves) return;
-
         AddWave(wave, direction, angle);
     }
 
     private void AddWave(Wave wave, Vector3 direction, float angle)
     {
+        if (waves.Count >= maximumWaves) return;
+
         waves.Insert(0, wave);
 
         directionals.Add(wave, (direction, angle));
