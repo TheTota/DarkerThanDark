@@ -127,9 +127,8 @@ public class WaveController : MonoBehaviour
     private void HandleWaves()
     {
         // Calculate speeds progression
-        for (int i = 0; i < waves.Count; i++)
+        foreach(var wave in waves)
         {
-            var wave = waves[i];
             wave.UpdateDistance(Time.deltaTime);
         }
     }
