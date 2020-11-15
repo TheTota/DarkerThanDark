@@ -36,6 +36,7 @@ public class Drone : MonoBehaviour
     private void Awake()
     {
         PeriodicWavesEmitter = GetComponent<PeriodicWaveEmitter>();
+        PeriodicWavesEmitter.DisableDirectional();
 
         lastPointChangeTime = Time.time;
         sentryPointsIndex = -1;
@@ -43,10 +44,15 @@ public class Drone : MonoBehaviour
 
         // get the nav mesh agent for patroller drones
         if (type == DroneType.Patroller)
-        {
+        {          
             navAgent = GetComponent<NavMeshAgent>();
             navAgent.speed = patrollingSpeed;
-            patrollingPointsParent.parent = null; // TODO: improve/clean this
+            patrollingPointsParent.parent = null; // TODO: improve/clean this        
+        }
+
+        if(type == DroneType.Sentry)
+        {
+            PeriodicWavesEmitter.EnableDirectional();
         }
     }
 
@@ -68,7 +74,12 @@ public class Drone : MonoBehaviour
         // if we have a target point, rotate towards it
         if (this.targetPoint && (type == DroneType.Sentry || !canMove))
         {
-            this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, Quaternion.LookRotation(targetPoint.position - transform.position), this.sentryRotationSpeed * Time.deltaTime);
+            this.body.transform.rotation = Quaternion.RotateTowards(this.body.transform.rotation, 
+                Quaternion.LookRotation(targetPoint.position - transform.position), 
+                this.sentryRotationSpeed * Time.deltaTime
+            );
+
+            PeriodicWavesEmitter.SetDirectionalValues(body.forward, angle: 45);
         }
     }
 
