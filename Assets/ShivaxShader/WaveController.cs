@@ -106,7 +106,9 @@ public class WaveController : MonoBehaviour
     /// <param name="wave"></param>
     public void EmitDirectionalWave(Wave wave, Vector3 direction, float angle)
     {
-        AddWave(wave, direction, angle);
+        float angleInRadian = angle * Mathf.PI / 180;
+
+        AddWave(wave, direction, angleInRadian);
     }
 
     private void AddWave(Wave wave, Vector3 direction, float angle)
