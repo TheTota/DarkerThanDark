@@ -17,6 +17,8 @@
 
             #include "UnityCG.cginc"
 
+            #define M_PI 3.1415926535897932384626433832795
+
             int _WavesCount;
 
             // Each float4 origin contains the distance pourcentage in the w coordinate.
@@ -54,16 +56,31 @@
                 return waveTrail * waveTrailWidth;
             }
 
+            // Normalize angle in [0, 2pi] range
+            float NormalizeAngle(float angle) {
+                return (angle + 2 * M_PI) % (2 * M_PI);
+            }
+
             float ComputeDirectionalWaveFilter(float3 worldPos, float3 origin, float3 direction, float angle) {
                 float desiredAngle = angle / 2;
                 
-                float directionAngle = atan2(direction.z, direction.x);
-                float fragmentAngle = atan2(worldPos.z - origin.z, worldPos.x - origin.x);
+                float directionAngle = NormalizeAngle(atan2(direction.z, direction.x));
+                float fragmentAngle = NormalizeAngle(atan2(worldPos.z - origin.z, worldPos.x - origin.x));
 
                 float endAngle = directionAngle + desiredAngle;
-                float startAngle = directionAngle - desiredAngle;
-                    
-                return step(startAngle, fragmentAngle) - step(endAngle, fragmentAngle);
+                float startAngle = directionAngle - desiredAngle; 
+                
+                float normalizedEndAngle = NormalizeAngle(endAngle);
+                float normalizedStartAngle = NormalizeAngle(startAngle);
+
+                // Some ugly calculations to get the correct angle to which dial of the circle the fragment is located without branching
+                float t1 = step(fragmentAngle, normalizedEndAngle) * (step(2 * M_PI, endAngle) + step(startAngle, 0)) 
+                         + step(startAngle, fragmentAngle) * step(endAngle, 2 * M_PI) * step(0, startAngle);
+
+                float t2 = step(normalizedStartAngle, fragmentAngle) * ( step(2 * M_PI, endAngle) + step(startAngle, 0)) 
+                         - step(endAngle, fragmentAngle) * step(endAngle, 2 * M_PI) * step(0, startAngle);           
+
+                return t1 + t2;
             }
 
             float GetDirectionalWaveFilter(float3 worldPos, float3 origin, float3 direction, float angle) {
