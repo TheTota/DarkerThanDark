@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FMODUnity;
+using System;
 using UnityEngine;
-using FMODUnity;
 
 public class PeriodicWaveEmitter : MonoBehaviour
 {
@@ -9,11 +8,17 @@ public class PeriodicWaveEmitter : MonoBehaviour
 
     [Header("Waves")]
     [SerializeField] private float secondsBetweenWaves = 2f;
+
     [SerializeField] private float wavesRadius = 10f;
     [SerializeField] private float wavesSpeed = 4f;
     [SerializeField] private Color wavesColor = Color.white;
-    private float lastWaveTime;
 
+    [Header("Directional")]
+    [SerializeField] private bool isDirectional = false;
+    [SerializeField] private Vector3 direction = Vector3.zero;
+    [SerializeField] private float angle = 0f;
+
+    private float lastWaveTime;
 
     private void Start()
     {
@@ -26,17 +31,38 @@ public class PeriodicWaveEmitter : MonoBehaviour
         // Emit waves
         if (Time.time - lastWaveTime >= secondsBetweenWaves)
         {
-            waveController.EmitWave(new Wave(this.transform.position, wavesRadius, wavesSpeed, wavesColor));
+            var wave = new Wave(transform.position, wavesRadius, wavesSpeed, wavesColor);
+            Action<Wave> EmitWave = GetEmitWaveBehavior();
+
+            EmitWave(wave);
+
             lastWaveTime = Time.time;
             RuntimeManager.PlayOneShot("event:/ExitPing", transform.position);
         }
     }
+
     public void SetValues(float secondsBetweenWaves, float wavesRadius, float wavesSpeed, Color wavesColor)
     {
         this.secondsBetweenWaves = secondsBetweenWaves;
         this.wavesRadius = wavesRadius;
         this.wavesSpeed = wavesSpeed;
         this.wavesColor = wavesColor;
+    }
+
+    public void SetDirectionalValues(Vector3 direction, float angle)
+    {
+        this.direction = direction;
+        this.angle = angle;
+    }
+
+    public void EnableDirectional()
+    {
+        isDirectional = true;
+    }
+
+    public void DisableDirectional()
+    {
+        isDirectional = false;
     }
 
     public float GetSecondsBetweenWaves()
@@ -62,5 +88,15 @@ public class PeriodicWaveEmitter : MonoBehaviour
     public void SetWavesColor(Color c)
     {
         this.wavesColor = c;
+    }
+
+    private Action<Wave> GetEmitWaveBehavior()
+    {
+        if (isDirectional)
+        {
+            return wave => waveController.EmitDirectionalWave(wave, direction, angle);
+        }
+
+        return wave => waveController.EmitWave(wave);
     }
 }

@@ -31,6 +31,7 @@ public class WaveController : MonoBehaviour
     [Header("Waves Debug")]
 
     [SerializeField] private List<Wave> waves;
+    [SerializeField] private Dictionary<Wave, (Vector3, float)> directionals;
 
     // Value fixed and synchronized with the maximum size of an array in the shader
     private const int shaderArraySizeLimit = 100;
@@ -46,11 +47,15 @@ public class WaveController : MonoBehaviour
     private void Start()
     {
         waves = new List<Wave>();
+        directionals = new Dictionary<Wave, (Vector3, float)>();
 
         // Set the maximum size of the arrays used by the shader 
         material.SetVectorArray("_Origins", EMPTY_VECTOR4_ARRAY);
         material.SetFloatArray("_Radius", EMPTY_FLOAT_ARRAY);
         material.SetVectorArray("_Colors", EMPTY_VECTOR4_ARRAY);
+
+        material.SetVectorArray("_Directions", EMPTY_VECTOR4_ARRAY);
+        material.SetFloatArray("_Angles", EMPTY_FLOAT_ARRAY);
     }
 
     private void Update()
@@ -65,6 +70,7 @@ public class WaveController : MonoBehaviour
         UpdateShader();
 
         waves = FilterWaves();
+        directionals = FilterDirectionalWaves();
     }
 
 
@@ -86,15 +92,34 @@ public class WaveController : MonoBehaviour
     }
 
     /// <summary>
-    /// Emit a wave which is updated over time.
+    /// Emit a fully circle wave which is updated over time.
     /// </summary>
     /// <param name="wave"></param>
     public void EmitWave(Wave wave)
     {
+        AddWave(wave, Vector3.zero, 0);
+    }
+
+    /// <summary>
+    /// Emit a directional wave which is updated over time.
+    /// </summary>
+    /// <param name="wave"></param>
+    public void EmitDirectionalWave(Wave wave, Vector3 direction, float angle)
+    {
+        float angleInRadian = angle * Mathf.PI / 180;
+
+        AddWave(wave, direction, angleInRadian);
+    }
+
+    private void AddWave(Wave wave, Vector3 direction, float angle)
+    {
         if (waves.Count >= maximumWaves) return;
 
         waves.Insert(0, wave);
+
+        directionals.Add(wave, (direction, angle));
     }
+
 
     /// <summary>
     /// Update waves progress and remove olders ones.
@@ -102,9 +127,8 @@ public class WaveController : MonoBehaviour
     private void HandleWaves()
     {
         // Calculate speeds progression
-        for (int i = 0; i < waves.Count; i++)
+        foreach(var wave in waves)
         {
-            var wave = waves[i];
             wave.UpdateDistance(Time.deltaTime);
         }
     }
@@ -121,15 +145,24 @@ public class WaveController : MonoBehaviour
             float[] radius = waves.Select(wave => wave.Radius).ToArray();
             Vector4[] colors = waves.Select(wave => (Vector4) wave.Color).ToArray();
 
+            Vector4[] directions = waves.Select(wave => (Vector4) directionals[wave].Item1).ToArray();
+            float[] angles = waves.Select(wave => directionals[wave].Item2).ToArray();
+
             material.SetVectorArray("_Origins", shaderOrigins);
             material.SetFloatArray("_Radius", radius);
             material.SetVectorArray("_Colors", colors);
+
+            material.SetVectorArray("_Directions", directions);
+            material.SetFloatArray("_Angles", angles);
         } 
         else
         {
             material.SetVectorArray("_Origins", EMPTY_VECTOR4_ARRAY);
             material.SetFloatArray("_Radius", EMPTY_FLOAT_ARRAY);
             material.SetVectorArray("_Colors", EMPTY_VECTOR4_ARRAY);
+
+            material.SetVectorArray("_Directions", EMPTY_VECTOR4_ARRAY);
+            material.SetFloatArray("_Angles", EMPTY_FLOAT_ARRAY);
         }
     }
 
@@ -140,6 +173,11 @@ public class WaveController : MonoBehaviour
     private List<Wave> FilterWaves()
     {
         return waves.Where(wave => wave.Distance < Wave.MAXIMUM_DISTANCE).ToList();
+    }
+
+    private Dictionary<Wave, (Vector3, float)> FilterDirectionalWaves()
+    {
+        return directionals.Where(pair => waves.Contains(pair.Key)).ToDictionary(p => p.Key, p => p.Value);
     }
 
     /// <summary>
