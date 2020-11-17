@@ -12,9 +12,13 @@ public class Player : MonoBehaviour
     private Camera mainCam;
     private LevelUI inGameUIGameObject;
 
-    // Shout
-    [Header("Shout")]
+    // Waves
+    [Header("Waves")]
+    [SerializeField] private int stepRadius = 5;
+    [SerializeField] private int stepSpeed = 4;
     [SerializeField] private float delayBetweenShouts = 1f;
+    [SerializeField] private int shoutRadius = 35;
+    [SerializeField] private int shoutSpeed = 4;
     private float lastShoutTime;
 
     // Footsteps variables
@@ -141,7 +145,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnWaveOnPlayerPos()
     {
-        waveController.EmitWave(new Wave(this.transform.position, 35, 4, Color.white));
+        waveController.EmitWave(new Wave(this.transform.position, shoutRadius, shoutSpeed, Color.white));
         // play "scream" sound 
         RuntimeManager.PlayOneShot("event:/Scream", transform.position);
 
@@ -163,7 +167,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(startingPos, down, out hit, 3))
         {
-            waveController.EmitWave(new Wave(hit.point, 5, 4, Color.white));
+            waveController.EmitWave(new Wave(hit.point, stepRadius, stepSpeed, Color.white));
             // play footstep sound 
            RuntimeManager.PlayOneShot("event:/Steps", transform.position);
 

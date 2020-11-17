@@ -39,7 +39,7 @@ public class Drone : MonoBehaviour
         PeriodicWavesEmitter.DisableDirectional();
 
         lastPointChangeTime = Time.time;
-        sentryPointsIndex = -1;
+        sentryPointsIndex = 0;
         patrollingPointsIndex = 1;
 
         // get the nav mesh agent for patroller drones

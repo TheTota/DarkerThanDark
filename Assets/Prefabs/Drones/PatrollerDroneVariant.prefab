@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139671976970980914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4060850900042805433}
@@ -551,6 +551,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1799011315, guid: dc38e350d995ed54a85944d87ea55fdf, type: 3}
+      propertyPath: visionDetectionTime
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 919132147791120197, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}
       propertyPath: patrollingPointsParent
@@ -620,6 +624,11 @@ PrefabInstance:
         type: 3}
       propertyPath: secondsBetweenWaves
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908009900888566126, guid: dc38e350d995ed54a85944d87ea55fdf,
+        type: 3}
+      propertyPath: wavesRadius
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}

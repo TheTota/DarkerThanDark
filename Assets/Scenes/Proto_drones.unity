@@ -288,29 +288,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41eca8178e9744a41ae0e75b03e26a6a, type: 3}
---- !u!1 &241657360 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1743903104223250, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-    type: 3}
-  m_PrefabInstance: {fileID: 1456437926}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &241657361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 241657360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3868892aeaf3f4e8b88435f2b3c3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayBetweenShouts: 1
-  delayBetweenFootsteps: 0.7
-  offsetBetweenSteps: 0.3
-  awarenessFullToEmptySeconds: 4
-  cameraRotationSpeed: 100
 --- !u!4 &370043329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8142082488477455198, guid: 05767592ed7384640861c59776faf0a2,
@@ -886,66 +863,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448068258976056, guid: 2e62f5703e5f8d2488a5e1bc8433be41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20724644957976244, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20724644957976244, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 81419976148993170, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: enableAudioSFX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: advanced.maxSlopeAngle
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: useStamina
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: canJump
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: _crouchModifiers.useCrouch
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: autoCrosshair
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: sprintSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
-        type: 3}
-      propertyPath: sprintKey
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
