@@ -25,7 +25,7 @@ public class WaveController : MonoBehaviour
 
     [Tooltip("Maximum number of waves which the controller can handle")]
     [Range(1, shaderArraySizeLimit)]
-    [SerializeField] private int maximumWaves = 1;
+    [SerializeField] private int maximumWaves = 10;
     
 
     [Header("Waves Debug")]

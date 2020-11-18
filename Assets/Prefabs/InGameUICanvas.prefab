@@ -506,7 +506,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: lEVEL x
+  m_text: LEVEL ID
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c5c0411801e49f24a85bb9f5dbd1a7b9, type: 2}
   m_sharedMaterial: {fileID: -4632444475136262272, guid: c5c0411801e49f24a85bb9f5dbd1a7b9,

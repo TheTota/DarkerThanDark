@@ -510,26 +510,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wave Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
-        type: 3}
-      propertyPath: maxWaves
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
-        type: 3}
-      propertyPath: radius
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
-        type: 3}
-      propertyPath: speed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
-        type: 3}
-      propertyPath: maximumWaves
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 4070213196848133371, guid: dce3aa47b824ba442a43a41caa611f17,
         type: 3}
       propertyPath: m_LocalPosition.x

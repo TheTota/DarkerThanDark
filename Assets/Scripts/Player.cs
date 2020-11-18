@@ -99,7 +99,8 @@ public class Player : MonoBehaviour
             // if we're not interacting with any drone, chill the waves and lower the awareness
             if (!isAwarenessTriggered)
             {
-                killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.yellow);
+                //killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.yellow);
+                killerDroneScript.PeriodicWavesEmitter.SetAlert(false);
                 awarenessValue = Mathf.Clamp01(awarenessValue - (Time.deltaTime / awarenessFullToEmptySeconds));
             }
             isAwarenessTriggered = false;
@@ -121,7 +122,8 @@ public class Player : MonoBehaviour
 
         killerDroneTransform = droneTranform;
         killerDroneScript = droneScript;
-        killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.red);
+        //killerDroneScript.PeriodicWavesEmitter.SetWavesColor(Color.red);
+        killerDroneScript.PeriodicWavesEmitter.SetAlert(true);
 
         this.awarenessValue = Mathf.Clamp01(this.awarenessValue + value);
     }

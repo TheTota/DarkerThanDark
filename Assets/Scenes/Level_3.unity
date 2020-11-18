@@ -659,18 +659,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dce3aa47b824ba442a43a41caa611f17, type: 3}
---- !u!114 &1596255430 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4070213196848133370, guid: dce3aa47b824ba442a43a41caa611f17,
-    type: 3}
-  m_PrefabInstance: {fileID: 1564386112}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 917e2da84a58a9d43a406eaf621432c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1787876777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -911,21 +899,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3858553823689565436, guid: 1a983c6fa15619b4e995239edc0abf0e,
-        type: 3}
-      propertyPath: waveController
-      value: 
-      objectReference: {fileID: 1596255430}
-    - target: {fileID: 4059144418332755676, guid: 1a983c6fa15619b4e995239edc0abf0e,
-        type: 3}
-      propertyPath: waveController
-      value: 
-      objectReference: {fileID: 1596255430}
-    - target: {fileID: 4059144418332755676, guid: 1a983c6fa15619b4e995239edc0abf0e,
-        type: 3}
-      propertyPath: wavesRadius
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4129026336976066976, guid: 1a983c6fa15619b4e995239edc0abf0e,
         type: 3}

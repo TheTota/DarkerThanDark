@@ -19,6 +19,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
     [SerializeField] private float angle = 0f;
 
     private float lastWaveTime;
+    private bool alert;
 
     private void Start()
     {
@@ -98,5 +99,18 @@ public class PeriodicWaveEmitter : MonoBehaviour
         }
 
         return wave => waveController.EmitWave(wave);
+    }
+
+    public void SetAlert(bool state)
+    {
+        if (state && !alert) {
+            alert = true;
+            this.SetValues(secondsBetweenWaves / 3, wavesRadius, wavesSpeed * 1.5f, Color.red);
+            this.lastWaveTime = this.secondsBetweenWaves;
+        }
+        else if (!state && alert) {
+            alert = false;
+            this.SetValues(secondsBetweenWaves * 3, wavesRadius, wavesSpeed / 1.5f, Color.yellow);
+        }
     }
 }

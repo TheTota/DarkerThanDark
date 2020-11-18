@@ -46,6 +46,6 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 497b27912b2610641a410f1b5a6e743b, type: 2}
   waveColorIntensity: 1
   waveRadiusWidth: 0.07
-  waveTrailWidth: 0.2
-  maximumWaves: 50
+  waveTrailWidth: 0.3
+  maximumWaves: 100
   waves: []

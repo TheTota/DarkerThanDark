@@ -36,7 +36,7 @@ public class Drone : MonoBehaviour
     private void Awake()
     {
         PeriodicWavesEmitter = GetComponent<PeriodicWaveEmitter>();
-        PeriodicWavesEmitter.DisableDirectional();
+        //PeriodicWavesEmitter.DisableDirectional();
 
         lastPointChangeTime = Time.time;
         sentryPointsIndex = 0;
@@ -50,10 +50,10 @@ public class Drone : MonoBehaviour
             patrollingPointsParent.parent = null; // TODO: improve/clean this        
         }
 
-        if(type == DroneType.Sentry)
-        {
-            PeriodicWavesEmitter.EnableDirectional();
-        }
+        //if(type == DroneType.Sentry)
+        //{
+        //    PeriodicWavesEmitter.EnableDirectional();
+        //}
     }
 
     // Update is called once per frame
@@ -151,7 +151,7 @@ public class Drone : MonoBehaviour
 
         // Emit more waves
         PeriodicWavesEmitter.SetValues(
-            PeriodicWavesEmitter.GetSecondsBetweenWaves() / 4f,
+            PeriodicWavesEmitter.GetSecondsBetweenWaves() / 2f,
             PeriodicWavesEmitter.GetWavesRadius(),
             PeriodicWavesEmitter.GetWavesSpeed(),
             Color.red
