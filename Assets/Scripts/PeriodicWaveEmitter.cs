@@ -91,6 +91,11 @@ public class PeriodicWaveEmitter : MonoBehaviour
         this.wavesColor = c;
     }
 
+    public float GetDirectionalAngle()
+    {
+        return this.angle;
+    }
+
     private Action<Wave> GetEmitWaveBehavior()
     {
         if (isDirectional)

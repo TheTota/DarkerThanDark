@@ -36,7 +36,7 @@ public class Drone : MonoBehaviour
     private void Awake()
     {
         PeriodicWavesEmitter = GetComponent<PeriodicWaveEmitter>();
-        //PeriodicWavesEmitter.DisableDirectional();
+        PeriodicWavesEmitter.SetDirectionalValues(body.forward, PeriodicWavesEmitter.GetDirectionalAngle());
 
         lastPointChangeTime = Time.time;
         sentryPointsIndex = 0;
@@ -49,11 +49,6 @@ public class Drone : MonoBehaviour
             navAgent.speed = patrollingSpeed;
             patrollingPointsParent.parent = null; // TODO: improve/clean this        
         }
-
-        //if(type == DroneType.Sentry)
-        //{
-        //    PeriodicWavesEmitter.EnableDirectional();
-        //}
     }
 
     // Update is called once per frame
@@ -79,7 +74,8 @@ public class Drone : MonoBehaviour
                 this.sentryRotationSpeed * Time.deltaTime
             );
 
-            PeriodicWavesEmitter.SetDirectionalValues(body.forward, angle: 45);
+            float angle = PeriodicWavesEmitter.GetDirectionalAngle();
+            PeriodicWavesEmitter.SetDirectionalValues(body.forward, angle);
         }
     }
 
