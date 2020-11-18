@@ -1147,6 +1147,11 @@ PrefabInstance:
       propertyPath: isDirectional
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3908009900888566126, guid: dc38e350d995ed54a85944d87ea55fdf,
+        type: 3}
+      propertyPath: angle
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 4250663151151218422, guid: dc38e350d995ed54a85944d87ea55fdf,
         type: 3}
       propertyPath: m_Name
