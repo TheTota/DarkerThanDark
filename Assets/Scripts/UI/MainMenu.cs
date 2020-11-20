@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class MainMenu : MonoBehaviour
 {
@@ -21,5 +22,10 @@ public class MainMenu : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void PlayNotes()
+    {
+        RuntimeManager.PlayOneShot("event:/MenuAmbiance", new Vector3(0f,1f,-10f));
     }
 }
