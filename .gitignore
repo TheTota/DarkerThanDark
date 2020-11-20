@@ -52,4 +52,7 @@ crashlytics-build.properties
 
 # FMOD
 FMOD_Project/dtd/.cache/
+fmod_editor.log
+Assets/Plugins/FMOD/Cache/
+
 
