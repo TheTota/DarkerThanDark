@@ -22,6 +22,7 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Level complete");
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/ExitAmbianceEnd", gameObject);
             LoadNextLevel();
         }
     }
