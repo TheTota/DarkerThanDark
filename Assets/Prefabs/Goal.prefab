@@ -158,5 +158,4 @@ MonoBehaviour:
   isDirectional: 0
   direction: {x: 0, y: 0, z: 0}
   angle: 0
-  soundDirection: 0
-  waveSound: event:/ExitPing
+  waveSound: event:/ExitAmbiance

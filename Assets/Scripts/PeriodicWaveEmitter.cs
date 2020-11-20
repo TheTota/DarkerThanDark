@@ -22,21 +22,14 @@ public class PeriodicWaveEmitter : MonoBehaviour
     private bool alert;
 
     [Header("FMOD")]
-    [SerializeField]
-    [Range(-180, 180)]
-    float soundDirection;
     [FMODUnity.EventRef]
     public string waveSound;
-    FMOD.Studio.EventInstance waveSoundEvent;
     
 
     private void Start()
     {
         waveController = WaveController.Instance;
         lastWaveTime = Time.time;
-
-
-        waveSoundEvent = RuntimeManager.CreateInstance(waveSound);
     }
 
     private void Update()
@@ -50,10 +43,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
             EmitWave(wave);
 
             lastWaveTime = Time.time;
-            string tag = this.gameObject.tag;
-            float direction;
-            waveSoundEvent.setParameterByName("Direction", soundDirection);
-            //Debug.Log(direction);
+
             RuntimeManager.PlayOneShotAttached(waveSound, gameObject);
         }
     }
