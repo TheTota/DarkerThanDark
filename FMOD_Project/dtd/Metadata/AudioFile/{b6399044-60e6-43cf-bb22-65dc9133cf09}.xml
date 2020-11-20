@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{b6399044-60e6-43cf-bb22-65dc9133cf09}">
+		<property name="assetPath">
+			<value>TowerBip.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.5898020833333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{472c3eb9-5c2b-4966-8511-79f7f9d61549}</destination>
+		</relationship>
+	</object>
+</objects>
