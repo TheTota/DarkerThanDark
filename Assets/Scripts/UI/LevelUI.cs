@@ -14,7 +14,7 @@ public class LevelUI : MonoBehaviour
 
     private void Awake()
     {
-        levelText.text = "level " + SceneManager.GetActiveScene().buildIndex;
+        levelText.text = "level " + (SceneManager.GetActiveScene().buildIndex - 1); 
     }
 
     public void RenderAwareness(float awarenessValue)
