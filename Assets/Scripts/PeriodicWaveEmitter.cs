@@ -108,7 +108,9 @@ public class PeriodicWaveEmitter : MonoBehaviour
 
     public void SetAlert(bool state)
     {
-        if (state && !alert) {
+        //Debug.Log(state + " _ " + alert);
+        if (state && !alert)
+        {
             alert = true;
             this.SetValues(secondsBetweenWaves / 3, wavesRadius, wavesSpeed * 1.5f, Color.red);
             this.lastWaveTime = this.secondsBetweenWaves;
