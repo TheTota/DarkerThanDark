@@ -70,11 +70,9 @@ public class Player : MonoBehaviour
         }
         else if (IsGameOver) // Smoothly rotate cam towards killer drone
         {
-            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDroneTransform.position - transform.position), this.cameraRotationSpeed * Time.deltaTime);
+            this.mainCam.transform.rotation = Quaternion.RotateTowards(this.mainCam.transform.rotation, Quaternion.LookRotation(this.killerDroneTransform.position - mainCam.transform.position), this.cameraRotationSpeed * Time.deltaTime);
         }
 
-        // Awareness system
-        HandleAwareness();
 
         // Escape to return to leave the game
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -83,6 +81,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    
     /// <summary>
     /// Handles awareness rendering, lowering when no contact with drones and triggering game over.
     /// Called every frame in he update function.
@@ -140,6 +140,10 @@ public class Player : MonoBehaviour
             steppingRight = !steppingRight;
         }
         lastPos = this.transform.position;
+
+
+        // Awareness system
+        HandleAwareness();
     }
 
     /// <summary>
@@ -150,8 +154,6 @@ public class Player : MonoBehaviour
         waveController.EmitWave(new Wave(this.transform.position, shoutRadius, shoutSpeed, Color.white));
         // play "scream" sound 
         RuntimeManager.PlayOneShot("event:/Scream", transform.position);
-
-
     }
 
     /// <summary>
@@ -172,8 +174,6 @@ public class Player : MonoBehaviour
             waveController.EmitWave(new Wave(hit.point, stepRadius, stepSpeed, Color.white));
             // play footstep sound 
            RuntimeManager.PlayOneShot("event:/Steps", transform.position);
-
-
         }
     }
 
