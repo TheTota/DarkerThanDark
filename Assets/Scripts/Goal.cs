@@ -2,10 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class Goal : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 2f;
+
+    [Header("FMOD")]
+    [FMODUnity.EventRef]
+    public string exitAmbianceEvent;
+    [FMODUnity.EventRef]
+    public string exitAmbianceEndEvent;
+
+    FMOD.Studio.EventInstance exitAmbiance;
+    
+    private void Start()
+    {
+        // FMOD Exit sound ambiance instantiation
+        exitAmbiance = RuntimeManager.CreateInstance(exitAmbianceEvent);
+        RuntimeManager.AttachInstanceToGameObject(exitAmbiance, GetComponent<Transform>(), GetComponent<Rigidbody>());
+        exitAmbiance.start();
+    }
 
     private void Update()
     {

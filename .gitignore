@@ -50,6 +50,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-#FMOD
-/FMOD_Project/dtd/.cache
+# FMOD
+FMOD_Project/dtd/.cache/
+fmod_editor.log
+Assets/Plugins/FMOD/Cache/
+
 

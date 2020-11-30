@@ -21,6 +21,11 @@ public class PeriodicWaveEmitter : MonoBehaviour
     private float lastWaveTime;
     private bool alert;
 
+    [Header("FMOD")]
+    [FMODUnity.EventRef]
+    public string waveSound;
+    
+
     private void Start()
     {
         waveController = WaveController.Instance;
@@ -38,7 +43,8 @@ public class PeriodicWaveEmitter : MonoBehaviour
             EmitWave(wave);
 
             lastWaveTime = Time.time;
-            RuntimeManager.PlayOneShot("event:/ExitPing", transform.position);
+
+            RuntimeManager.PlayOneShotAttached(waveSound, gameObject);
         }
     }
 
@@ -108,14 +114,14 @@ public class PeriodicWaveEmitter : MonoBehaviour
 
     public void SetAlert(bool state)
     {
-        //Debug.Log(state + " _ " + alert);
         if (state && !alert)
         {
             alert = true;
             this.SetValues(secondsBetweenWaves / 3, wavesRadius, wavesSpeed * 1.5f, Color.red);
             this.lastWaveTime = this.secondsBetweenWaves;
         }
-        else if (!state && alert) {
+        else if (!state && alert)
+        {
             alert = false;
             this.SetValues(secondsBetweenWaves * 3, wavesRadius, wavesSpeed / 1.5f, Color.yellow);
         }

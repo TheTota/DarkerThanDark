@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
+  exitAmbianceEvent: event:/ExitAmbiance
+  exitAmbianceEndEvent: event:/ExitEventEnd
 --- !u!114 &4059144418332755676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +160,4 @@ MonoBehaviour:
   isDirectional: 0
   direction: {x: 0, y: 0, z: 0}
   angle: 0
+  waveSound: event:/Silence
