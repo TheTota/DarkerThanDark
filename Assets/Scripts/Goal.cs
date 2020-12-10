@@ -15,13 +15,19 @@ public class Goal : MonoBehaviour
     public string exitAmbianceEndEvent;
 
     FMOD.Studio.EventInstance exitAmbiance;
-    
-    private void Start()
+
+    private void Awake()
     {
-        // FMOD Exit sound ambiance instantiation
         exitAmbiance = RuntimeManager.CreateInstance(exitAmbianceEvent);
         RuntimeManager.AttachInstanceToGameObject(exitAmbiance, GetComponent<Transform>(), GetComponent<Rigidbody>());
         exitAmbiance.start();
+    }
+
+    private void Start()
+    {
+        // FMOD Exit sound ambiance instantiation
+        
+        
     }
 
     private void Update()
@@ -38,6 +44,7 @@ public class Goal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            exitAmbiance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             Debug.Log("Level complete");
             LoadNextLevel();
         }
