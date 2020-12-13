@@ -14,7 +14,6 @@ public class PeriodicWaveEmitter : MonoBehaviour
     [SerializeField] private Color wavesColor = Color.white;
 
     [Header("Directional")]
-    [SerializeField] private bool isDirectional = false;
     [SerializeField] private Vector3 direction = Vector3.zero;
     [SerializeField] private float angle = 0f;
 
@@ -24,7 +23,7 @@ public class PeriodicWaveEmitter : MonoBehaviour
     [Header("FMOD")]
     [FMODUnity.EventRef]
     public string waveSound;
-    
+
 
     private void Start()
     {
@@ -37,10 +36,15 @@ public class PeriodicWaveEmitter : MonoBehaviour
         // Emit waves
         if (Time.time - lastWaveTime >= secondsBetweenWaves)
         {
-            var wave = new Wave(transform.position, wavesRadius, wavesSpeed, wavesColor);
-            Action<Wave> EmitWave = GetEmitWaveBehavior();
+            // directional wave
+            var directionalWave = new Wave(transform.position, wavesRadius, wavesSpeed, wavesColor);
+            Action<Wave> EmitDirectionalWave = GetEmitWaveBehavior(true);
+            EmitDirectionalWave(directionalWave);
 
-            EmitWave(wave);
+            // proximity wave 
+            //var proxWave = new Wave(transform.position, wavesRadius / 2f, wavesSpeed, wavesColor);
+            //Action<Wave> EmitProxWave = GetEmitWaveBehavior(false);
+            //EmitProxWave(proxWave);
 
             lastWaveTime = Time.time;
 
@@ -60,16 +64,6 @@ public class PeriodicWaveEmitter : MonoBehaviour
     {
         this.direction = direction;
         this.angle = angle;
-    }
-
-    public void EnableDirectional()
-    {
-        isDirectional = true;
-    }
-
-    public void DisableDirectional()
-    {
-        isDirectional = false;
     }
 
     public float GetSecondsBetweenWaves()
@@ -102,14 +96,17 @@ public class PeriodicWaveEmitter : MonoBehaviour
         return this.angle;
     }
 
-    private Action<Wave> GetEmitWaveBehavior()
+    private Action<Wave> GetEmitWaveBehavior(bool directional)
     {
-        if (isDirectional)
+        if (directional)
         {
             return wave => waveController.EmitDirectionalWave(wave, direction, angle);
         }
+        else
+        {
+            return wave => waveController.EmitWave(wave);
+        }
 
-        return wave => waveController.EmitWave(wave);
     }
 
     public void SetAlert(bool state)

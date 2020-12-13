@@ -51,7 +51,7 @@ MonoBehaviour:
   Path: event:/ExitEventEnd
   guid: 5377f3205680e749ba632d23b9dc5be9
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -110,7 +110,7 @@ MonoBehaviour:
   Path: event:/Steps
   guid: 02ce1ad438d3c047a196daad155f37f4
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -151,7 +151,7 @@ MonoBehaviour:
   Path: event:/TowerBip
   guid: a88da15e992c7444928777a3d2e1ab3f
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -174,7 +174,7 @@ MonoBehaviour:
   Path: event:/ExitPing
   guid: 407f06492561824eb3e848dc8476b0a1
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -197,7 +197,7 @@ MonoBehaviour:
   Path: event:/DarkAmbiantFX
   guid: 0743746e5174bf4bb758442b99d09f09
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   Path: event:/MenuAmbiance
   guid: b7e358a63ea7684586bec702e07a12f8
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD_Project/dtd/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637432290967565319
+  lastModified: 637434552700878866
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -482005845452196204}
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   EditorEvents:
   - {fileID: -4883762342635617936}
   - {fileID: -2363208144169444904}
@@ -311,11 +311,29 @@ MonoBehaviour:
   - {fileID: -929855281304601506}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   StringsBanks:
   - {fileID: -482005845452196204}
-  stringsBankWriteTime: 637432290967565319
+  stringsBankWriteTime: 637434552700878866
   cacheVersion: 3
+--- !u!114 &358625033601322869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD_Project/dtd/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637434552700873857
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &625747232687440613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +385,7 @@ MonoBehaviour:
   Path: event:/ExitAmbiance
   guid: 07c5058db23f6e45af7d2cad1594200a
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
@@ -390,7 +408,7 @@ MonoBehaviour:
   Path: event:/Silence
   guid: 5af311c93a658347b69c1cf99fea8d7e
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -485,7 +503,7 @@ MonoBehaviour:
   Path: event:/Scream
   guid: fc7830510aa9b340a3a19eb396c76f9d
   Banks:
-  - {fileID: -8745556872773240097}
+  - {fileID: 358625033601322869}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1

@@ -73,10 +73,10 @@ public class Drone : MonoBehaviour
                 Quaternion.LookRotation(targetPoint.position - transform.position), 
                 this.sentryRotationSpeed * Time.deltaTime
             );
-
-            float angle = PeriodicWavesEmitter.GetDirectionalAngle();
-            PeriodicWavesEmitter.SetDirectionalValues(body.forward, angle);
         }
+
+        float angle = PeriodicWavesEmitter.GetDirectionalAngle();
+        PeriodicWavesEmitter.SetDirectionalValues(body.forward, angle);
     }
 
     private void DoSentryBehaviour()
