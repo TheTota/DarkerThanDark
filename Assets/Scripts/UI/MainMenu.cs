@@ -30,6 +30,11 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void PlayNotes()
     {
         RuntimeManager.PlayOneShot("event:/MenuAmbiance", new Vector3(0f,1f,-10f));

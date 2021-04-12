@@ -634,15 +634,22 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Depuis des milliers d\u2019ann\xE9es les Covidiens, esp\xE8ce cybern\xE9tique
-    cr\xE9\xE9e par les Reptiliens pour contr\xF4ler l\u2019Univers, capturent des
-    \xEAtres vivants pour leur implanter une puce afin d\u2019en faire des esclaves.\r\n\nVous
-    avez \xE9t\xE9 captur\xE9 et amen\xE9 dans leur prison nomm\xE9e \u201CEspace
-    de domestication\u201D.\r\n\nVous vous r\xE9veillez dans l\u2019Espace de domestication,
-    seul et plong\xE9 dans le noir. En vous levant vous touchez un objet, et celui-ci
-    g\xE9n\xE8re une onde lumineuse qui d\xE9voile temporairement les formes qui
-    vous entourent.\r\n\nVous d\xE9cidez donc de le prendre et d\u2019entamer votre
-    \xE9vasion...\r\n"
+  m_text: 'For thousands of years the Covidians, a cybernetic species created by
+    the Reptilians to control the Universe, have been capturing living beings to
+    implant a chip in them to make them slaves.
+
+
+    You were captured and taken
+    to their prison called "Domestication Space".
+
+
+    You wake up in the Domestication
+    Space, alone and in the dark. As you stand up you touch an object, and it generates
+    a light wave that temporarily reveals the shapes around you.
+
+
+    You decide
+    to take it and start your escape...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea8a9f193b6b63c4e8cdddbaa29992a9, type: 2}
   m_sharedMaterial: {fileID: 8398883771858470407, guid: ea8a9f193b6b63c4e8cdddbaa29992a9,

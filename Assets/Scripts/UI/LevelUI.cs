@@ -14,7 +14,11 @@ public class LevelUI : MonoBehaviour
 
     private void Awake()
     {
-        levelText.text = "level " + (SceneManager.GetActiveScene().buildIndex - 1); 
+        levelText.text = "level " + (SceneManager.GetActiveScene().buildIndex - 1);
+        if ((SceneManager.GetActiveScene().buildIndex - 1) == 1)
+        {
+            levelText.text += "\n<size=60%>find a way out";
+        }
     }
 
     public void RenderAwareness(float awarenessValue)
